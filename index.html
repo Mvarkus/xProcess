@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image processing application</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <!-- Scripts -->
+    <script src="assets/js/opencv.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1></h1>
+        </div>
+    </header>
+    <main>
+        <div class="image-box-wrapper">
+            <div class="image-box original">
+                <span class="box-title">Original</span>
+                <canvas></canvas>
+            </div>
+            <div class="arrow">
+
+            </div>
+            <div class="image-box result">
+                <span class="box-title">Result</span>
+                <canvas></canvas>
+            </div>
+        </div>
+
+        <div class="breadcrumb-wrapper">
+            <div class="step" data-step-id="1">
+                <span class="step-title"></span>
+                <span class="step-arrow">arrow</span>
+            </div>
+        </div>
+
+        <div class="menu-wrapper">
+            <div class="menu" data-menu-id="1">
+                <div class="help-button">
+                    <div class="help-tooltip">
+                        <p>Please choose an image which needs to be altered.</p>
+                    </div>
+
+                    <div class="menu-body">
+                        <label class="upload-button">
+                            Choose file
+                            <input class="upload-input" type="file" name="image">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+</body>
+</html>
