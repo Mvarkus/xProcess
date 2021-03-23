@@ -1,10 +1,45 @@
 /* General ------------------------------------------------------- */
+
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 input[type="file"] {
-    display: none;
+  display: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  padding: 5px;
+}
+
+/* Header -------------------------------------------------------- */
+
+header {
+  padding: 10px;
+  position: relative;
+}
+
+header .logo .line {
+  width: 96%;
+  position: absolute;
+  left: 2%;
+  top: 50%;
+  height: 2px;
+  background-color: #292929;
+  z-index: -1;
+}
+
+header .logo {
+  text-align: center;
+}
+
+header .logo h1 {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  color: #E4E4E4;
+  border: 20px solid #FFFFFF;
+  background-color: #292929;
 }
