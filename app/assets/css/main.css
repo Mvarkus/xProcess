@@ -1,0 +1,109 @@
+@font-face {
+  font-family: "Quicksand";
+  src: url('../fonts/Quicksand-Medium.ttf') format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: url('../fonts/Quicksand-Light.ttf') format("truetype");
+  font-weight: 100;
+}
+
+/* General ------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  padding: 5px;
+}
+
+/* Header -------------------------------------------------------- */
+
+header {
+  position: relative;
+}
+
+header .logo .line {
+  width: 96%;
+  position: absolute;
+  left: 2%;
+  top: 50%;
+  height: 2px;
+  background-color: #404040;
+  z-index: -1;
+}
+
+header .logo h1 {
+  width: 90%;
+  margin: 0 auto;
+  padding: 15px 15px 20px 15px;
+
+  color: #f5f5f5;
+  border: 20px solid #FFFFFF;
+  background-color: #404040;
+
+  font-family: 'Quicksand';
+  font-weight: 100;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+/* Main -------------------------------------------------------- */
+.image-box-wrapper {
+  width: 80%;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.image-box-wrapper > .arrow {
+  flex: 1;
+  padding: 15px;
+}
+
+.image-box-wrapper > .arrow > img {
+  max-width: 100%;
+  padding: 5px;
+  display: block;
+  position: relative;
+  top: 50%;
+  text-align: center;
+  transform: translate(0, -50%);
+}
+
+.image-box-wrapper .image-box {
+  border: 2px solid #E4E4E4;
+  margin: 10px;
+  flex: 10;
+  min-height: 350px;
+  position: relative;
+}
+
+.image-box-wrapper .box-title {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  transform: translate(0, -50%);
+
+  font-family: 'Quicksand';
+  font-weight: 400;
+  color: #404040;
+}
+
+.image-box-wrapper .image-box canvas {
+  max-width: 100%;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
