@@ -33,13 +33,13 @@ header {
 }
 
 header .logo .line {
-  width: 96%;
-  position: absolute;
-  left: 2%;
-  top: 50%;
-  height: 2px;
   background-color: #404040;
+  width: 96%;
+  left: 2%;
   z-index: -1;
+  height: 2px;
+  position: absolute;
+  top: 50%;
 }
 
 header .logo h1 {
@@ -106,4 +106,33 @@ header .logo h1 {
   left: 0;
   top: 0;
   height: 100%;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  font-family: 'Quicksand';
+  color: #bcbcbc;
+  margin: 30px 0;
+}
+
+.steps > .step {
+  display: flex;
+}
+
+.steps > .active-step {
+  color: #404040;
+}
+
+.steps > .step > .line {
+  width: 20px;
+  height: 1px;
+  position: relative;
+  background-color: #bcbcbc;
+  top: 50%;
+  margin: 0 10px;
+}
+
+.steps > .active-step > .line {
+  background: #404040;
 }
