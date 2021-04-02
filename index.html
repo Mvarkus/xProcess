@@ -28,22 +28,9 @@
 
   <!---------------- Main ---------------------->
   <main>
-    <div class="image-box-wrapper">
-      <div class="image-box original">
-        <span class="box-title">Original</span>
-        <canvas></canvas>
-      </div>
-      <div class="arrow">
-        <img src="assets/icons/process.svg" alt="arrow">
-      </div>
-      <div class="image-box result">
-        <span class="box-title">Result</span>
-        <canvas></canvas>
-      </div>
-    </div>
 
     <div class="steps">
-      <div data-step-id="1" class="step active-step">
+      <div data-step-id="1" class="step active-step current">
         <span class="step-title">Upload</span>
       </div>
       <div data-step-id="2" class="step">
@@ -64,22 +51,37 @@
       </div>
     </div>
 
-    <div class="menu-wrapper">
-      <div class="menu" data-menu-id="1">
-        <div class="help-button">
+    <div class="wrapper">
+
+      <div class="menu">
+        <div class="help">
+          <span class="help-button">?</span>
           <div class="help-tooltip">
             <p>Please choose an image which needs to be altered.</p>
           </div>
-
-          <div class="menu-body">
-            <label class="upload-button">
-              Choose file
-              <input class="upload-input" type="file" name="image">
-            </label>
-          </div>
+        </div>
+        <div class="menu-body">
+          <label class="upload-button">
+            Choose an image
+            <input class="upload-input" type="file" name="image">
+          </label>
+        </div>
+        <div class="control-buttons">
+          <button>go back</button>
+          <button>save & proceed</button>
         </div>
       </div>
+      
+
+      <div class="image-box">
+        <canvas></canvas>
+        <div class="image-meta-data">
+          <span></span>
+        </div>
+      </div>
+      
     </div>
+    
   </main>
 
 
