@@ -111,7 +111,7 @@ header .logo h1 {
 }
 
 
-/* Menu */
+/* menu */
 
 .wrapper {
   width: 80%;
@@ -120,13 +120,21 @@ header .logo h1 {
   justify-content: center;
 }
 
-.menu {
+.control-panel {
   flex: 2;
   position: relative;
   border: .15em solid #E4E4E4;
 }
 
-.menu > .menu-body {
+.control-panel > .control-panel-title {
+  display: block;
+  padding: 1em;
+  text-align: center;
+  border-bottom: 2px solid #E4E4E4;
+  font-size: 1.1em;
+}
+
+.control-panel > .control-panel-body {
   padding: 30px 10px;
   display: flex;
   justify-content: center;
