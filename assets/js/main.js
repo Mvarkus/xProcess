@@ -6,7 +6,7 @@ const main = (global) => {
         new Router({
             PanelController: new PanelController(
                 new PanelService(
-                    new PanelRenderer({
+                    new PanelView({
                         body: document.querySelector('.control-panel-body'),
                         tooltip: document.querySelector('.help-tooltip')
                     })
@@ -24,12 +24,21 @@ const main = (global) => {
     app.run();
 };
 
+/**
+ * Holds and controls Stage instances
+ */
 class StageHandler {
+    /**
+     * @param {Stage[]} stages 
+     */
     constructor(stages) {
         this._stages = stages;
         this._currentStage = 0;
     }
 
+    /**
+     * @returns {Stage} instance
+     */
     getActiveStage() {
         return this._stages[this._currentStage];
     }
@@ -39,24 +48,36 @@ class StageHandler {
     }
 
     switchToPreviousStage() {
-        this._currentStage === 0 ? 0 : this._currentStage--;
+        this._currentStage--;
     }
 
+    /**
+     * @returns {boolean}
+     */
     nextStageExists() {
-        return this._stages.length < this._currentStage+1;
+        return this._stages.length > this._currentStage+1;
     }
 
+    /**
+     * @returns {boolean}
+     */
     previousStageExists() {
         return this._currentStage > 0;
     }
 }
 
+/**
+ * Stage is responsible for holding actions to bootstrap the application's phase.
+ * 
+ * The actions call controller methods to register event handlers,
+ * render some content, change state of the application.
+ */
 class Stage {
+
+
     /**
-     * @param {function():object} buildCallback - builds DOM components collection
-     * @param {Object[]} actions - array of actions to be called within application to bootstrap a stage
-     * @param {string} actions[].controller
-     * @param {string} actions[].action
+     * @param {function():object} buildCallback - generates DOM components collection
+     * @param {array} actions - array of actions to be called to bootstrap the application's stage
     */
     constructor(buildCallback, actions) {
         this._state = {};
@@ -66,28 +87,28 @@ class Stage {
     }
 
     /**
-     * @returns {Object} Collection of DOM components
+     * @returns {object} Collection of DOM components
      */
     getDomComponents() {
         return this._domComponents;
     }
 
     /**
-     * @returns {Object[]} actions
+     * @returns {array} actions
      */
      getActions() {
         return this._actions;
     }
 
     /**
-     * @param {Object} state 
+     * @param {object} state 
      */
     setState(state) {
         this._state = state;
     }
 
     /**
-     * @returns state object
+     * @returns {object} state of a stage
      */
     getState() {
         return this._state;
@@ -115,32 +136,59 @@ const generateStages = () => {
                 button: button,
                 tooltip: tooltip
             };
-        },
-        [
-            {controller: 'PanelController', action: 'registerEvents'},
-            {controller: 'PanelController', action: 'updateBody'},
-            {controller: 'PanelController', action: 'updateTooltip'},
+        }, [
+            ['PanelController', 'registerEvents'],
+            ['PanelController', 'updateBody'],
+            ['PanelController', 'updateTooltip'],
         ]
     );
 
     return [fileUploadStage];
 }
 
+/**
+ * Router holds controllers
+ */
 class Router {
+    /**
+     * @param {object} controllers - collection of controller instances
+     */
     constructor(controllers) {
         this._controllers = controllers;
     }
 
+    /**
+     * @param {string} name controller's name 
+     * @returns {object} instance of a controller
+     */
     getController(name) {
         return this._controllers[name];
     }
 
+    /**
+     * 
+     * @param {string} name controller's name  
+     * @returns {boolean}
+     */
     controllerExists(name) {
         return name in this._controllers;
     }
 }
 
+/**
+ * Core of the application, is responsible for few tasks.
+ * 
+ * The first is retrieving list of actions out of Stage instance,
+ * getting needed controllers from the router and 
+ * calling methods which were specified in the actions list.
+ * 
+ * Another task is to switch application's phases by using StageHandler.
+ */
 class Application {
+    /**
+     * @param {StageHandler} stageHandler 
+     * @param {Router} router 
+     */
     constructor(stageHandler, router) {
         this._stageHandler = stageHandler;
         this._router = router;
@@ -153,7 +201,7 @@ class Application {
     _handleStage() {
         const activeStage = this._stageHandler.getActiveStage();
 
-        for (const {controller, action } of activeStage.getActions()) {
+        for (const [controller, action] of activeStage.getActions()) {
             if (this._router.controllerExists(controller)) {
                 this._router.getController(controller)[action](
                     activeStage,
@@ -171,56 +219,116 @@ class Application {
 }
 
 class PanelController {
+    /**
+     * @param {PanelService} service instance
+     */
     constructor(service) {
         this._service = service;
     }
 
+    /**
+     * @param {Stage} stage 
+     * @param {Router} router 
+     */
     registerEvents(stage, router) {
-        this._service.registerInputFileEvent(
-            stage.getDomComponents()['button'].control, 
-            router.getController('ImageController')
+        this._service.registerInputChangeEventHandler(
+            stage.getDomComponents().button.control, router
         );
     }
 
+    /**
+     * @param {Stage} stage  
+     */
     updateBody(stage) {
         this._service.renderUpdate(
             'body',
-            stage.getDomComponents()['button']
+            stage.getDomComponents().button
         );
     }
 
+    /**
+     * @param {Stage} stage  
+     */
     updateTooltip(stage) {
         this._service.renderUpdate(
             'tooltip',
-            stage.getDomComponents()['tooltip']
+            stage.getDomComponents().tooltip
         );
     }
 }
 
 class PanelService {
+    /**
+     * @param {PanelView} renderer instance 
+     */
     constructor(renderer) {
         this._renderer = renderer;
-    }    
-
-    registerInputFileEvent(inputElement, imageController) {
-        inputElement.addEventListener('change', () => {});
     }
 
+    /**
+     * @param {HTMLElement} inputElement
+     * @param {Router} router
+     */
+    registerInputChangeEventHandler(inputElement, router) {
+        inputElement.addEventListener('change', (event) => {
+            const imageFile = event.target.files[0];
+        });
+    }
+
+    /**
+     * @param {string} part control panel part name
+     * @param {HTMLElement} content 
+     */
     renderUpdate(part, content) {
         this._renderer.clearPanelPart(part);
         this._renderer.fillPanelPart(part, content);
     }
 }
 
-class PanelRenderer {
+class PanelView {
+    /**
+     * @param {object} panelDomParts collection of HTMLElement intances
+     */
     constructor(panelDomParts) {
         this._panelDomParts = panelDomParts;
+
+        this._controlButtons = {
+            previous: {
+                active: false
+            },
+            next: {
+                active: false   
+            }
+        };
     }
 
+    /**
+     * @param {string} buttonName 
+     * @param {object} state 
+     */
+    setButtonState(buttonName, state) {
+        this._controlButtons[buttonName] = state;
+    }
+
+    /**
+     * @param {string} buttonName 
+     * @returns {object} state of a button 
+     */
+    getButtonState(buttonName) {
+        return this._controlButtons[buttonName];
+    }
+
+    /**
+     * @param {string} partName 
+     */
     clearPanelPart(partName) {
         this._panelDomParts[partName].innerHTML = '';
     }
 
+    /**
+     * @param {string} partName 
+     * @param {HTMLElement} content 
+     */
     fillPanelPart(partName, content) {
         this._panelDomParts[partName].append(content)
     }
@@ -228,11 +336,11 @@ class PanelRenderer {
 
 class BreadcrumbController {}
 class BreadcrumbService {}
-class BreadcrumbRenderer {}
+class BreadcrumbView {}
 
 class ImageController {}
 class ImageService {}
-class ImageRenderer {}
+class ImageView {}
 class ImageProcessor {}
 
 main({});
