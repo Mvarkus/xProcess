@@ -226,15 +226,20 @@ header .logo h1 {
   position: relative;
   margin-left: 4em;
   min-height: 400px;
+  text-align: center;
 }
 
 .image-box canvas {
   max-width: 100%;
   left: 0;
   top: 0;
-  height: 100%;
+}
+
+.image {
+  display: inline-block;
 }
 
 .image-meta-data {
-  text-align: center;
+  padding: .5em;
+  text-decoration: underline;
 }
