@@ -73,8 +73,6 @@ class StageHandler {
  * render some content, change state of the application.
  */
 class Stage {
-
-
     /**
      * @param {function():object} buildCallback - generates DOM components collection
      * @param {array} actions - array of actions to be called to bootstrap the application's stage
