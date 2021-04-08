@@ -1,6 +1,11 @@
 "use strict";
 
 const main = (global) => {
+    const controlButtons = {
+        back: document.querySelector('.back-button'),
+        next: document.querySelector('.next-button')
+    };
+
     const app = new Application(
         new StageHandler(generateStages()),
         new Router({
@@ -8,7 +13,8 @@ const main = (global) => {
                 new PanelService(
                     new PanelView({
                         body: document.querySelector('.control-panel-body'),
-                        tooltip: document.querySelector('.help-tooltip')
+                        tooltip: document.querySelector('.help-tooltip'),
+                        buttons: controlButtons
                     })
                 )
             ),
@@ -16,11 +22,23 @@ const main = (global) => {
                 new BreadcrumbService()
             ),
             ImageController: new ImageController(
-                new ImageService()
+                new ImageService(
+                    new ImageView({
+                        canvas: document.querySelector('.image-box canvas'),
+                        meta: document.querySelector('.image-meta-data')
+                    })
+                )
             )
         })
     );
 
+    controlButtons.next.addEventListener('click', () => {
+        app.proceed();
+    });
+    controlButtons.back.addEventListener('click', () => {
+        app.goBack();
+    });
+    
     app.run();
 };
 
@@ -135,9 +153,8 @@ const generateStages = () => {
                 tooltip: tooltip
             };
         }, [
-            ['PanelController', 'registerEvents'],
-            ['PanelController', 'updateBody'],
-            ['PanelController', 'updateTooltip'],
+            ['ImageController', 'registerFileUploadEventHandlers'],
+            ['PanelController', 'updatePanel']
         ]
     );
 
@@ -160,6 +177,10 @@ class Router {
      * @returns {object} instance of a controller
      */
     getController(name) {
+        if (!this._controllerExists(name)) {
+            throw Error(`Controller ${name} does not exist`);
+        }
+
         return this._controllers[name];
     }
 
@@ -168,7 +189,7 @@ class Router {
      * @param {string} name controller's name  
      * @returns {boolean}
      */
-    controllerExists(name) {
+    _controllerExists(name) {
         return name in this._controllers;
     }
 }
@@ -200,19 +221,27 @@ class Application {
         const activeStage = this._stageHandler.getActiveStage();
 
         for (const [controller, action] of activeStage.getActions()) {
-            if (this._router.controllerExists(controller)) {
-                this._router.getController(controller)[action](
-                    activeStage,
-                    this._router
-                );
-            }
+            this._router.getController(controller)[action](
+                activeStage,
+                this._router
+            );
         }
     }
 
     proceed() {
+        const buttonState = this._router
+            .getController('PanelController')
+            .retrieveButtonState('next');
+        
+        console.log(buttonState);
     }
 
     goBack() {
+        const buttonState = this._router
+            .getController('PanelController')
+            .retrieveButtonState('back');
+        
+        console.log(buttonState);
     }
 }
 
@@ -225,52 +254,35 @@ class PanelController {
     }
 
     /**
-     * @param {Stage} stage 
-     * @param {Router} router 
-     */
-    registerEvents(stage, router) {
-        this._service.registerInputChangeEventHandler(
-            stage.getDomComponents().button.control, router
-        );
-    }
-
-    /**
      * @param {Stage} stage  
      */
-    updateBody(stage) {
+    updatePanel(stage) {
         this._service.renderUpdate(
             'body',
             stage.getDomComponents().button
         );
-    }
 
-    /**
-     * @param {Stage} stage  
-     */
-    updateTooltip(stage) {
         this._service.renderUpdate(
             'tooltip',
             stage.getDomComponents().tooltip
         );
     }
+
+    changeButtonState(buttonName, state) {
+        this._service.changeButtonState(buttonName, state);
+    }
+
+    retrieveButtonState(buttonName) {
+        return this._service.retrieveButtonState(buttonName);
+    }
 }
 
 class PanelService {
     /**
-     * @param {PanelView} renderer instance 
+     * @param {PanelView} view instance 
      */
-    constructor(renderer) {
-        this._renderer = renderer;
-    }
-
-    /**
-     * @param {HTMLElement} inputElement
-     * @param {Router} router
-     */
-    registerInputChangeEventHandler(inputElement, router) {
-        inputElement.addEventListener('change', (event) => {
-            const imageFile = event.target.files[0];
-        });
+    constructor(view) {
+        this._view = view;
     }
 
     /**
@@ -278,8 +290,16 @@ class PanelService {
      * @param {HTMLElement} content 
      */
     renderUpdate(part, content) {
-        this._renderer.clearPanelPart(part);
-        this._renderer.fillPanelPart(part, content);
+        this._view.clearPanelPart(part);
+        this._view.fillPanelPart(part, content);
+    }
+
+    changeButtonState(buttonName, state) {
+        this._view.setButtonState(buttonName, state);
+    }
+
+    retrieveButtonState(buttonName) {
+        return this._view.getButtonState(buttonName);
     }
 }
 
@@ -291,7 +311,7 @@ class PanelView {
         this._panelDomParts = panelDomParts;
 
         this._controlButtons = {
-            previous: {
+            back: {
                 active: false
             },
             next: {
@@ -306,6 +326,8 @@ class PanelView {
      */
     setButtonState(buttonName, state) {
         this._controlButtons[buttonName] = state;
+        this._panelDomParts.buttons[buttonName].classList = 
+            state.active ? 'activate' : '';
     }
 
     /**
@@ -332,13 +354,127 @@ class PanelView {
     }
 }
 
+class ImageController {
+    /**
+     * @param {ImageService} service instance
+     */
+    constructor(service) {
+        this._service = service;
+    }
+
+    /**
+     * @param {Stage} stage 
+     */
+    registerFileUploadEventHandlers(stage, router) {
+        this._service.registerInputEventHandlers(
+            stage.getDomComponents()['button']['control'],
+            router
+        );
+    }
+
+}
+class ImageService {
+    /**
+     * @param {ImageView} view instance 
+     * @param {ImageProcessor} imageProcessor instance 
+     */
+    constructor(view, imageProcessor) {
+        this._view = view;
+        this._imageProcessor = imageProcessor;
+
+        this._imageFile = null;
+    }
+
+    /**
+     * @param {HTMLElement} inputElement instance
+     */
+     registerInputEventHandlers(inputElement, router) {
+        inputElement.onchange = (event) => {
+            this.setImageFile(event.target.files[0]);
+            this.updateImageBox();
+            router.getController('PanelController').changeButtonState(
+                'next',
+                {active: true}
+            );
+        };
+    }
+
+    /**
+     * @param {File} imageFile instance
+     */
+    setImageFile(imageFile) {
+        if (imageFile.type.split('/')[0] !== 'image') {
+            NotificationManager.errorOccured(
+                new Error("Uploaded file must be an image")
+            );
+        }
+        
+        this._imageFile = imageFile;
+    }
+
+    getImageFile() {
+        return this._imageFile;
+    }
+
+    updateImageBox() {
+        this._view.updateCanvas(this.getImageFile());
+        this._view.updateMetaData(this.getImageFile());
+    }
+}
+
+class ImageView {
+    /**
+     * @param {object} imageBoxParts collection of DOM elemets
+     */
+    constructor(imageBoxParts) {
+        this._imageBoxParts = imageBoxParts;
+    }
+
+    /**
+     * @param {File} imageFile instance
+     */
+    updateCanvas(imageFile) {
+        const image = new Image();
+        image.src = URL.createObjectURL(imageFile);
+
+        image.onload = () => {
+            cv.imshow(this._imageBoxParts.canvas, cv.imread(image));
+            URL.revokeObjectURL(image.src);
+        };
+    }
+
+    /**
+     * @param {File} imageFile instance 
+     */
+    updateMetaData(imageFile) {
+        const filename = document.createElement('span');
+        filename.textContent = imageFile.name;
+
+        this._imageBoxParts.meta.append(filename);
+    }
+}
+class ImageProcessor {}
+
 class BreadcrumbController {}
 class BreadcrumbService {}
 class BreadcrumbView {}
 
-class ImageController {}
-class ImageService {}
-class ImageView {}
-class ImageProcessor {}
+
+
+class NotificationManager {
+    /**
+     * Handles errors occurence
+     * 
+     * @param {Error} error instance 
+     */
+    static errorOccured(error) {
+        this.notifyUser(error.message, 'error');
+        throw error;
+    }
+
+    static notifyUser(message, type) {
+        alert(message);
+    }
+}
 
 main({});
