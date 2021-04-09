@@ -16,7 +16,7 @@ class PanelView {
     }
 
     /**
-     * @param {string} buttonName 
+     * @param {string} buttonName
      * @param {object} state 
      */
     setButtonState(buttonName, state) {
@@ -26,8 +26,8 @@ class PanelView {
     }
 
     /**
-     * @param {string} buttonName 
-     * @returns {object} state of a button 
+     * @param {string} buttonName
+     * @returns {object} state
      */
     getButtonState(buttonName) {
         return this._controlButtons[buttonName];

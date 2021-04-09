@@ -7,9 +7,10 @@ class ImageController {
     }
 
     /**
-     * @param {Stage} stage 
+     * @param {Stage} stage instance 
+     * @param {Router} router instance
      */
-    registerFileUploadEventHandlers(stage, router) {
+    switchToFileUploadStage(stage, router) {
         this._service.registerInputEventHandlers(
             stage.getDomComponents()['button']['control'],
             router

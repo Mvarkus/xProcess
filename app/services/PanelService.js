@@ -15,10 +15,18 @@ class PanelService {
         this._view.fillPanelPart(part, content);
     }
 
+     /**
+     * @param {string} buttonName 
+     * @param {object} state 
+     */
     changeButtonState(buttonName, state) {
         this._view.setButtonState(buttonName, state);
     }
 
+    /**
+     * @param {string} buttonName
+     * @returns {object} state
+     */
     retrieveButtonState(buttonName) {
         return this._view.getButtonState(buttonName);
     }
