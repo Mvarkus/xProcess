@@ -70,9 +70,9 @@ header .logo h1 {
 
 /* Main -------------------------------------------------------- */
 
-/* Steps */
+/* Breadcrumbs */
 
-.steps {
+.breadcrumbs {
   display: flex;
   justify-content: center;
   letter-spacing: .05em;
@@ -80,21 +80,21 @@ header .logo h1 {
   margin: 50px 0 10px 0;
 }
 
-.steps > .step {
+.breadcrumbs > .breadcrumb {
   display: flex;
   position: relative;
 }
 
-.steps > .step > .step-title {
+.breadcrumbs > .breadcrumb > .breadcrumb-title {
   padding: 8px 10px;
   background: #FFFFFF;
 }
 
-.steps > .active-step {
+.breadcrumbs > .active-breadcrumb {
   color: #404040;
 }
 
-.steps > .step > .line {
+.breadcrumbs > .breadcrumb > .line {
   width: 20px;
   height: .1em;
   position: relative;
@@ -102,7 +102,7 @@ header .logo h1 {
   top: 50%;
 }
 
-.steps > .active-step > .line {
+.breadcrumbs > .active-breadcrumb > .line {
   background: #404040;
 }
 
