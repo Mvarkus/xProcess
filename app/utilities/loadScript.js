@@ -1,7 +1,7 @@
 const loadScript = (name) => {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = 'assets/js/'+name;
+        script.src = name;
         document.body.append(script);
 
         script.onload = () => resolve();
