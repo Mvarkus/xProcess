@@ -33,18 +33,39 @@
     }
 
     proceed() {
-        const buttonState = this._router
-            .getController('PanelController')
-            .retrieveButtonState('next');
-        
-        console.log(buttonState);
+        const panelController = this._router.getController('PanelController');
+        const buttonState = panelController.retrieveButtonState('next');
+
+        if (buttonState.active && this._stageHandler.nextStageExists()) {
+            const currentStage = this._stageHandler.getActiveStage();
+            currentStage.setState({done: true});
+
+            this._stageHandler.switchToNextStage();
+            this._handleStage();
+
+            panelController.changeButtonState('next', {
+                active: this._stageHandler.nextStageIsDone()
+            });
+            panelController.changeButtonState('back', {
+                active: true
+            });
+        }
     }
 
     goBack() {
-        const buttonState = this._router
-            .getController('PanelController')
-            .retrieveButtonState('back');
-        
-        console.log(buttonState);
+        const panelController = this._router.getController('PanelController');
+        const buttonState = panelController.retrieveButtonState('back');
+
+        if (buttonState.active && this._stageHandler.previousStageExists()) {
+            this._stageHandler.switchToPreviousStage();
+            this._handleStage();
+
+            panelController.changeButtonState('back', {
+                active: this._stageHandler.previousStageExists()
+            });
+            panelController.changeButtonState('next', {
+                active: true
+            });
+        }
     }
 }

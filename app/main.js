@@ -7,7 +7,12 @@ const main = (global) => {
     };
 
     const app = new Application(
-        new StageHandler(generateStages()),
+        new StageHandler(generateStages({
+            supportedMethods: [
+                'adjust brightess',
+                'adjust contrast'
+            ]
+        })),
         new Router({
             PanelController: new PanelController(
                 new PanelService(
@@ -19,7 +24,9 @@ const main = (global) => {
                 )
             ),
             BreadcrumbController: new BreadcrumbController(
-                new BreadcrumbService()
+                new BreadcrumbService(
+                    new BreadcrumbView()
+                )
             ),
             ImageController: new ImageController(
                 new ImageService(

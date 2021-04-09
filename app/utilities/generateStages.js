@@ -1,4 +1,6 @@
-const generateStages = () => {
+const generateStages = ({
+    supportedMethods
+}) => {
     const fileUploadStage = new Stage(
         () => {
             const tooltip = document.createElement('p');
@@ -20,9 +22,31 @@ const generateStages = () => {
                 tooltip: tooltip
             };
         }, [
-        ['ImageController', 'registerFileUploadEventHandlers'],
-        ['PanelController', 'updatePanel']
+        ['ImageController', 'switchToFileUploadStage'],
+        ['PanelController', 'switchToFileUploadStage']
     ]);
 
-    return [fileUploadStage];
+    const methodChoosingStage = new Stage(
+        () => {
+            const tooltip = document.createElement('p');
+            tooltip.textContent = 'Please select a method of how to alter the image';
+
+            const list = document.createElement('ul');
+            list.classList = 'methods-list';
+
+            for (const method of supportedMethods) {
+                list.append(
+                    document.createElement('li').textContent = method
+                );
+            }
+
+            return {
+                methodsList: list,
+                tooltip: tooltip
+            };
+        }, [
+        ['PanelController', 'switchToMethodChoosigStage']
+    ]);
+
+    return [fileUploadStage, methodChoosingStage];
 }

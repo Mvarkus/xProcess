@@ -10,7 +10,10 @@
      * @param {array} actions - array of actions to be called to bootstrap the application's stage
     */
     constructor(buildCallback, actions) {
-        this._state = {};
+        this._state = {
+            done: false,
+            data: null
+        };
 
         this._domComponents = buildCallback();
         this._actions = actions;
@@ -33,8 +36,11 @@
     /**
      * @param {object} state 
      */
-    setState(state) {
-        this._state = state;
+    setState({done, data}) {
+        this._state = {
+            done: done,
+            data: data ?? this.getState()['data']
+        };
     }
 
     /**

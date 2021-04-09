@@ -17,6 +17,28 @@ class StageHandler {
         return this._stages[this._currentStage];
     }
 
+    /**
+     * @returns {Stage} instance
+     */
+    nextStageIsDone() {
+        if (this.nextStageExists()) {
+            return this._stages[this._currentStage+1].getState['done'];
+        }
+
+        return false;
+    }
+
+    /**
+     * @returns {Stage} instance
+     */
+    previousStageIsDone() {
+        if (this.previousStageExists()) {
+            return this._stages[this._currentStage-1].getState['done'];
+        }
+
+        return false;
+    }
+
     switchToNextStage() {
         this._currentStage++
     }
