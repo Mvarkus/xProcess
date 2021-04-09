@@ -25,7 +25,9 @@ const main = (global) => {
             ),
             BreadcrumbController: new BreadcrumbController(
                 new BreadcrumbService(
-                    new BreadcrumbView()
+                    new BreadcrumbView({
+                        breadcrumbs: document.querySelector('.breadcrumbs')
+                    })
                 )
             ),
             ImageController: new ImageController(

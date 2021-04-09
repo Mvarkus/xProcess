@@ -34,6 +34,8 @@
 
     proceed() {
         const panelController = this._router.getController('PanelController');
+        const breadcrumbController = this._router.getController('BreadcrumbController');
+        
         const buttonState = panelController.retrieveButtonState('next');
 
         if (buttonState.active && this._stageHandler.nextStageExists()) {
@@ -49,11 +51,15 @@
             panelController.changeButtonState('back', {
                 active: true
             });
+
+            breadcrumbController.movePointerForward();
         }
     }
 
     goBack() {
         const panelController = this._router.getController('PanelController');
+        const breadcrumbController = this._router.getController('BreadcrumbController');
+
         const buttonState = panelController.retrieveButtonState('back');
 
         if (buttonState.active && this._stageHandler.previousStageExists()) {
@@ -66,6 +72,8 @@
             panelController.changeButtonState('next', {
                 active: true
             });
+
+            breadcrumbController.movePointerBack();
         }
     }
 }
