@@ -49,11 +49,4 @@
     getState() {
         return this._state;
     }
-
-    /**
-     * @returns {int|string}
-     */
-    getId() {
-        return this._id;
-    }
 }
