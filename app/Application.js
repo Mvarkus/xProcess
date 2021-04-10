@@ -38,16 +38,15 @@
         
         const buttonState = panelController.retrieveButtonState('next');
 
-        if (buttonState.active && this._stageHandler.nextStageExists()) {
-            const currentStage = this._stageHandler.getActiveStage();
-            currentStage.setState({done: true});
-
+        if (buttonState.active && this._stageHandler.nextStageExists()) { 
             this._stageHandler.switchToNextStage();
             this._handleStage();
+            const activeStage = this._stageHandler.getActiveStage();
 
             panelController.changeButtonState('next', {
-                active: this._stageHandler.nextStageIsDone()
+                active: activeStage.getState()['done']
             });
+
             panelController.changeButtonState('back', {
                 active: true
             });
@@ -65,12 +64,14 @@
         if (buttonState.active && this._stageHandler.previousStageExists()) {
             this._stageHandler.switchToPreviousStage();
             this._handleStage();
+            const activeStage = this._stageHandler.getActiveStage();
 
             panelController.changeButtonState('back', {
                 active: this._stageHandler.previousStageExists()
             });
+            
             panelController.changeButtonState('next', {
-                active: true
+                active: activeStage.getState()['done']
             });
 
             breadcrumbController.movePointerBack();
