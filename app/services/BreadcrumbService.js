@@ -15,6 +15,8 @@ class BreadcrumbService {
     }
 
     movePointerBack() {
-        this._view.movePointerBack(--this._currentBreadcrumb);
+        if (this._currentBreadcrumb > 0) {
+            this._view.movePointerBack(--this._currentBreadcrumb);
+        }
     }
 }
