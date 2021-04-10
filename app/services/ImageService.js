@@ -1,22 +1,32 @@
 class ImageService {
     /**
-     * @param {ImageView} view instance 
-     * @param {ImageProcessor} imageProcessor instance 
+     * @param {ImageView} view instance  
      */
-    constructor(view, imageProcessor) {
+    constructor(view) {
         this._view = view;
-        this._imageProcessor = imageProcessor;
-
-        this._imageFile = null;
+        this._chosenMethodsContext = null;
     }
 
     /**
-     * @param {HTMLElement} inputElement instance
+     * @param {object} domComponents collection of DOM elements
      */
-     registerInputEventHandlers(inputElement, router) {
-        inputElement.onchange = (event) => {
-            this.setImageFile(event.target.files[0]);
-            this.updateImageBox();
+     registerFileUploadEventHandlers(stage, router) {
+        stage.getDomComponents().button.control.onchange = (event) => {
+            if (!this._isImage(event.target.files[0])) {
+                NotificationManager.errorOccured(
+                    new Error("Uploaded file must be an image")
+                );
+
+                return false;
+            }
+
+            this.setupImageBox(event.target.files[0]);
+
+            stage.setState({
+                done: true,
+                data: {imageFile: event.target.files[0]}
+            });
+
             router.getController('PanelController').changeButtonState(
                 'next',
                 {active: true}
@@ -25,24 +35,52 @@ class ImageService {
     }
 
     /**
+     * @param {Stage} stage instance
+     * @param {Router} router instance
+     */
+    registerMethodChoosingEventHandlers(stage, router) {
+        stage.getDomComponents().methodsList.addEventListener('click', (event) => {
+            if (event.target.tagName !== 'LI') {
+                return false;
+            }
+            const li = event.target;
+            const activeLi = li.parentElement.querySelector('.active-method');
+            
+            this._chosenMethodsContext = li[Symbol.for('methodContext')];
+
+            if (activeLi !== null) {
+                activeLi.classList.remove('active-method');
+            }
+
+            li.classList.add('active-method');
+            stage.setState({done: true});
+
+            router.getController('PanelController').changeButtonState(
+                'next', {active: true}
+            );
+        }); 
+    }
+
+    /**
      * @param {File} imageFile instance
      */
-    setImageFile(imageFile) {
+    _isImage(imageFile) {
         if (imageFile.type.split('/')[0] !== 'image') {
-            NotificationManager.errorOccured(
-                new Error("Uploaded file must be an image")
-            );
+            return false;
         }
         
-        this._imageFile = imageFile;
+        return true;
     }
 
-    getImageFile() {
-        return this._imageFile;
+    /**
+     * @returns {string} 
+     */
+    getChosenMethodContext() {
+        return this._chosenMethodsContext;
     }
 
-    updateImageBox() {
-        this._view.updateCanvas(this.getImageFile());
-        this._view.updateMetaData(this.getImageFile());
+    setupImageBox(imageFile) {
+        this._view.drawImage(imageFile);
+        this._view.updateMetaData(imageFile);
     }
 }
