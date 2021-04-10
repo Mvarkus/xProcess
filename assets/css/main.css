@@ -111,7 +111,7 @@ header .logo h1 {
 }
 
 
-/* menu */
+/* Control panel */
 
 .wrapper {
   width: 80%;
@@ -190,7 +190,27 @@ header .logo h1 {
   border: .15em solid #404040;
 }
 
+.methods-list {
+  list-style: none;
+  font-size: 1.1em;
+  text-align: center;
+}
 
+.methods-list > li {
+  padding: .6em .4em;
+  margin: .3em 0;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.methods-list > li:hover {
+  border-bottom: 2px solid #404040;
+}
+
+.methods-list > li.active-method {
+  font-weight: 600;
+  border-bottom: 2px solid #404040;
+}
 
 .control-buttons {
   position: absolute;
