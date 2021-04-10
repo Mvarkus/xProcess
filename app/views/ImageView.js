@@ -9,7 +9,7 @@ class ImageView {
     /**
      * @param {File} imageFile instance
      */
-    updateCanvas(imageFile) {
+     drawImage(imageFile) {
         const image = new Image();
         image.src = URL.createObjectURL(imageFile);
 
