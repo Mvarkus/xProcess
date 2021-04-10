@@ -35,9 +35,9 @@ const generateStages = ({
             list.classList = 'methods-list';
 
             for (const method of supportedMethods) {
-                list.append(
-                    document.createElement('li').textContent = method
-                );
+                const li = document.createElement('li');
+                li.textContent = method;
+                list.append(li);
             }
 
             return {
