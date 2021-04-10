@@ -8,10 +8,13 @@ const main = (global) => {
 
     const app = new Application(
         new StageHandler(generateStages({
-            supportedMethods: [
-                'adjust brightess',
-                'adjust contrast'
-            ]
+            supportedMethods: [{
+                text: 'adjust brightess',
+                methodName: 'adjustBrightness'
+            }, {
+                text: 'adjust contrast',
+                methodName: 'adjustContrast'
+            }]
         })),
         new Router({
             PanelController: new PanelController(
@@ -47,7 +50,7 @@ const main = (global) => {
     controlButtons.back.addEventListener('click', () => {
         app.goBack();
     });
-    
+
     app.run();
 };
 
