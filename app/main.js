@@ -10,10 +10,18 @@ const main = (global) => {
         new StageHandler(generateStages({
             supportedMethods: [{
                 text: 'adjust brightess',
-                methodName: 'adjustBrightness'
+                name: 'adjustBrightness',
+                registrator: [
+                    'ImageController',
+                    'adjustBrightnessBootstrap'
+                ]
             }, {
                 text: 'adjust contrast',
-                methodName: 'adjustContrast'
+                name: 'adjustContrast',
+                registrator: [
+                    'ImageController',
+                    'adjustContrastBootstrap'
+                ] 
             }]
         })),
         new Router({
