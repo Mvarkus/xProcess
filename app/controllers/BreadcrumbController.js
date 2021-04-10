@@ -5,7 +5,7 @@ class BreadcrumbController {
     constructor(service) {
         this._service = service;
     }
-
+    
     movePointerForward() {
         this._service.movePointerForward();
     }
