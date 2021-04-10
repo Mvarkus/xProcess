@@ -12,30 +12,46 @@ class PanelController {
     switchToFileUploadStage(stage) {
         this._service.renderUpdate(
             'body',
-            stage.getDomComponents()['button']
+            stage.getDomComponents().button
         );
 
         this._service.renderUpdate(
             'tooltip',
-            stage.getDomComponents()['tooltip']
+            stage.getDomComponents().tooltip
         );
     }
 
     /**
      * @param {Stage} stage  
      */
-     switchToMethodChoosigStage(stage) {
+    switchToMethodChoosigStage(stage) {
         this._service.renderUpdate(
-            'body',
-            stage.getDomComponents()['methodsList']
+            'body', stage.getDomComponents().methodsList
         );
 
         this._service.renderUpdate(
-            'tooltip',
-            stage.getDomComponents()['tooltip']
+            'tooltip', stage.getDomComponents().tooltip
+        );
+    }
+
+    /**
+     * @param {Stage} stage  
+     * @param {Router} router  
+     */
+    switchToCustomizationStage(stage, router) {
+        const methodsContext = router.getController('ImageController')
+            .retrieveChosenMethodContext();
+        const [controller, action] = methodsContext.registrator;
+
+        this._service.renderUpdate(
+            'body', stage.getDomComponents().controls[methodsContext.name]
         );
 
-        this._service.changeButtonState('back', {active: true});
+        this._service.renderUpdate(
+            'tooltip', stage.getDomComponents().tooltip
+        );
+
+        router.getController(controller)[action](stage, router);
     }
 
     /**
