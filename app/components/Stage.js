@@ -38,7 +38,7 @@
      */
     setState({done, data}) {
         this._state = {
-            done: done,
+            done: done ?? this.getState()['data'],
             data: data ?? this.getState()['data']
         };
     }
