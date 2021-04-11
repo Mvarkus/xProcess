@@ -31,7 +31,6 @@ Promise.all([
     loadScript('app/stages/MethodSelectionStage.js'),
     loadScript('app/stages/MethodCustomizationStage.js'),
     loadScript('app/components/Router.js'),
-    loadScript('app/components/ImageProcessor.js'),
     loadScript('app/components/NotificationManager.js'),
     loadScript('app/controllers/PanelController.js'),
     loadScript('app/controllers/ImageController.js'),
