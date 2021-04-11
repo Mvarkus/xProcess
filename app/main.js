@@ -7,54 +7,14 @@ const main = (global) => {
     };
 
     const app = new Application(
-        new StageHandler(generateStages({
-            supportedMethods: [{
-                text: 'adjust brightess',
-                name: 'adjustBrightness',
-                registrator: [
-                    'ImageController',
-                    'adjustBrightnessBootstrap'
-                ]
-            }, {
-                text: 'adjust contrast',
-                name: 'adjustContrast',
-                registrator: [
-                    'ImageController',
-                    'adjustContrastBootstrap'
-                ] 
-            }]
-        })),
-        new Router({
-            PanelController: new PanelController(
-                new PanelService(
-                    new PanelView({
-                        body: document.querySelector('.control-panel-body'),
-                        tooltip: document.querySelector('.help-tooltip'),
-                        buttons: controlButtons
-                    })
-                )
-            ),
-            BreadcrumbController: new BreadcrumbController(
-                new BreadcrumbService(
-                    new BreadcrumbView({
-                        breadcrumbs: document.querySelector('.breadcrumbs')
-                    })
-                )
-            ),
-            ImageController: new ImageController(
-                new ImageService(
-                    new ImageView({
-                        canvas: document.querySelector('.image-box canvas'),
-                        meta: document.querySelector('.image-meta-data')
-                    })
-                )
-            )
-        })
+        StageHandler.build(),
+        Router.build(controlButtons)
     );
 
     controlButtons.next.addEventListener('click', () => {
         app.proceed();
     });
+
     controlButtons.back.addEventListener('click', () => {
         app.goBack();
     });
@@ -64,10 +24,12 @@ const main = (global) => {
 
 Promise.all([
     loadScript('app/Application.js'),
-    loadScript('app/utilities/generateStages.js'),
     loadScript('app/utilities/opencv.js'),
-    loadScript('app/components/StageHandler.js'),
-    loadScript('app/components/Stage.js'),
+    loadScript('app/stages/StageHandler.js'),
+    loadScript('app/stages/Stage.js'),
+    loadScript('app/stages/FileUploadStage.js'),
+    loadScript('app/stages/MethodSelectionStage.js'),
+    loadScript('app/stages/MethodCustomizationStage.js'),
     loadScript('app/components/Router.js'),
     loadScript('app/components/ImageProcessor.js'),
     loadScript('app/components/NotificationManager.js'),
