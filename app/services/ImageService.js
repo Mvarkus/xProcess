@@ -22,10 +22,8 @@ class ImageService {
 
             this.setupImageBox(event.target.files[0]);
 
-            stage.setState({
-                done: true,
-                data: {imageFile: event.target.files[0]}
-            });
+            stage.state = {imageFile: event.target.files[0]};
+            stage.done = true;
 
             router.getController('PanelController').changeButtonState(
                 'next',
@@ -53,7 +51,7 @@ class ImageService {
             }
 
             li.classList.add('active-method');
-            stage.setState({done: true});
+            stage.done = true;
 
             router.getController('PanelController').changeButtonState(
                 'next', {active: true}

@@ -22,14 +22,7 @@
     }
 
     _handleStage() {
-        const activeStage = this._stageHandler.getActiveStage();
-
-        for (const [controller, action] of activeStage.getActions()) {
-            this._router.getController(controller)[action](
-                activeStage,
-                this._router
-            );
-        }
+        this._stageHandler.getActiveStage().bootstrap(this._router);
     }
 
     proceed() {
@@ -41,10 +34,9 @@
         if (buttonState.active && this._stageHandler.nextStageExists()) { 
             this._stageHandler.switchToNextStage();
             this._handleStage();
-            const activeStage = this._stageHandler.getActiveStage();
 
             panelController.changeButtonState('next', {
-                active: activeStage.getState()['done']
+                active: this._stageHandler.getActiveStage().done
             });
 
             panelController.changeButtonState('back', {
@@ -62,16 +54,16 @@
         const buttonState = panelController.retrieveButtonState('back');
 
         if (buttonState.active && this._stageHandler.previousStageExists()) {
+            this._stageHandler.getActiveStage().terminate();
             this._stageHandler.switchToPreviousStage();
             this._handleStage();
-            const activeStage = this._stageHandler.getActiveStage();
 
             panelController.changeButtonState('back', {
                 active: this._stageHandler.previousStageExists()
             });
             
             panelController.changeButtonState('next', {
-                active: activeStage.getState()['done']
+                active: this._stageHandler.getActiveStage().done
             });
 
             breadcrumbController.movePointerBack();
