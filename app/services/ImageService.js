@@ -4,7 +4,7 @@ class ImageService {
      */
     constructor(view) {
         this._view = view;
-        this._chosenMethodsContext = null;
+        this._chosenMethodContext = null;
     }
 
     /**
@@ -44,7 +44,7 @@ class ImageService {
             const li = event.target;
             const activeLi = li.parentElement.querySelector('.active-method');
             
-            this._chosenMethodsContext = li[Symbol.for('methodContext')];
+            this._chosenMethodContext = li[Symbol.for('methodContext')];
 
             if (activeLi !== null) {
                 activeLi.classList.remove('active-method');
@@ -57,6 +57,29 @@ class ImageService {
                 'next', {active: true}
             );
         }); 
+    }
+
+    /**
+     * @param {Stage} stage instance
+     * @param {Router} router instance
+     */
+    registerAdjustBrightnessHandlers(stage, router) {
+        const container = stage.getDomComponents()
+            .controls[this._chosenMethodContext.name];
+        const button = container.querySelector('button');
+        const input = container.querySelector('.slider-value');
+        const slider = container.querySelector('.slider');
+        const min = slider.min, max = slider.max;
+        
+        button.addEventListener('click', (event) => {
+            if (+input.value > max) {
+                input.value = max
+            } else if (+input.value < min) {
+                input.value = min
+            }
+        
+            this._view.alterBrightness(+input.value);
+        });
     }
 
     /**
@@ -74,7 +97,7 @@ class ImageService {
      * @returns {string} 
      */
     getChosenMethodContext() {
-        return this._chosenMethodsContext;
+        return this._chosenMethodContext;
     }
 
     setupImageBox(imageFile) {
