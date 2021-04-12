@@ -19,8 +19,8 @@ class MethodCustomizationStage extends Stage {
         return {
             controls: {
                 'adjustBrightness': this._buildSlider({
-                    min: -100, 
-                    max: 100, 
+                    min: -235, 
+                    max: 235, 
                     startValue: 0, 
                     sliderTitleText: 'Adjust Brightness'
                 }),
