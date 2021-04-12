@@ -17,7 +17,7 @@
         tooltip.textContent = 'Choose an image which needs to be altered.';
 
         const button = document.createElement('label');
-        button.classList = 'upload-button';
+        button.classList = 'panel-button';
         button.textContent = 'Choose an image';
 
         const input = document.createElement('input');
