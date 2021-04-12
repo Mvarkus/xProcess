@@ -20,7 +20,8 @@ class ImageService {
                 return false;
             }
 
-            this.setupImageBox(event.target.files[0]);
+            this._view.imageFile = event.target.files[0];
+            this.setupImageBox();
 
             stage.state = {imageFile: event.target.files[0]};
             stage.done = true;
