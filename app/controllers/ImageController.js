@@ -25,13 +25,14 @@ class ImageController {
             stage, router
         );
     }
+    
 
     retrieveChosenMethodContext() {
         return this._service.getChosenMethodContext();
     }
 
     adjustBrightnessBootstrap(stage, router) {
-        console.log(stage);
+        this._service.registerAdjustBrightnessHandlers(stage, router);
     }
 
     adjustContrastBootstrap(stage, router) {
