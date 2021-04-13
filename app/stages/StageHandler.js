@@ -51,6 +51,13 @@ class StageHandler {
                 'ImageController',
                 'imageNegativesBootsrap'
             ]
+        }, {
+            text: 'Log transform',
+            name: 'logTransform',
+            registrator: [
+                'ImageController',
+                'logTransformBootsrap'
+            ]
         }];
 
         return new this([

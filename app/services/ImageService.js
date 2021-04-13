@@ -162,6 +162,25 @@ class ImageService {
         });
     }
 
+    registerLogTransformHandlers(stage, router) {
+        const container = stage.getDomComponents()
+            .controls[this._chosenMethodContext.name].elements;
+        const button = container.querySelector('button');
+        const input = container.querySelector('.slider-value');
+        const slider = container.querySelector('.slider');
+        const min = slider.min, max = slider.max;
+        
+        button.addEventListener('click', (event) => {
+            if (+input.value > max) {
+                input.value = max
+            } else if (+input.value < min) {
+                input.value = min
+            }
+        
+            this._view.logTransform(+input.value);
+        });
+    }
+
     /**
      * @param {File} imageFile instance
      */

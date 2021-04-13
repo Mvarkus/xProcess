@@ -58,4 +58,8 @@ class ImageController {
     imageNegativesBootsrap(stage, router) {
         this._service.registerImageNegativesHandlers(stage, router);
     }
+
+    logTransformBootsrap(stage, router) {
+        this._service.registerLogTransformHandlers(stage, router);
+    }
 }

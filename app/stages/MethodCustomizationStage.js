@@ -60,7 +60,7 @@ class MethodCustomizationStage extends Stage {
                         min: 0.1,
                         labelText: "level",
                         step: 0.1,
-                        max: 4,
+                        max: 7,
                         startValue: 1, 
                         sliderTitleText: 'Gamma correction'
                     }),
@@ -88,7 +88,20 @@ class MethodCustomizationStage extends Stage {
                     tooltip: document.createElement('p')
                         .textContent = `Select the gamma correction level by moving the slider
                             or entering it into the input box.`
-                }
+                },
+                logTransform: {
+                    elements: this._buildSlider({
+                        min: 30,
+                        labelText: "level",
+                        step: 1,
+                        max: 100,
+                        startValue: 30, 
+                        sliderTitleText: 'Log transform'
+                    }),
+                    tooltip: document.createElement('p')
+                        .textContent = `Select the tranformation level by moving the slider
+                             or entering it into the input box.`
+                },
             }
         };
     }
