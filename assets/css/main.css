@@ -217,6 +217,14 @@ header .logo h1 {
   border-bottom: 2px solid #404040;
 }
 
+.method-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  text-align: center;
+  display: block;
+  padding: .7em 0;
+}
+
 .slider-container {
   display: flex;
   flex-flow: column nowrap;
@@ -225,14 +233,6 @@ header .logo h1 {
 
 .slider-container .panel-button {
   margin: 1em auto;
-}
-
-.slider-title {
-  font-size: 1.1em;
-  font-weight: 600;
-  text-align: center;
-  display: block;
-  padding: .7em 0;
 }
 
 .slider-container .range-wrapper {
