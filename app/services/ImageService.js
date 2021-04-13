@@ -153,6 +153,15 @@ class ImageService {
         });
     }
 
+    registerImageNegativesHandlers(stage, router) {
+        const applyButton = stage.getDomComponents()
+            .controls[this._chosenMethodContext.name].elements.querySelector('button');
+
+        applyButton.addEventListener('click', (event) => {
+            this._view.imageNegatives();
+        });
+    }
+
     /**
      * @param {File} imageFile instance
      */
@@ -172,7 +181,7 @@ class ImageService {
     }
 
     redrawImage() {
-        console.log('redrwa');
+        console.log();
         this._view.drawImage();
     }
 

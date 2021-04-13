@@ -67,6 +67,27 @@ class MethodCustomizationStage extends Stage {
                     tooltip: document.createElement('p')
                         .textContent = `Select the gamma correction level by moving the slider
                             or entering it into the input box.`
+                },
+                imageNegatives: {
+                    elements: (() => {
+                        const applyButton = document.createElement('button');
+                        const methodTitle = document.createElement('span');
+                        const wrapper = document.createElement('div');
+                        
+                        applyButton.classList.add('panel-button');
+                        applyButton.textContent = 'apply';
+
+                        // Method title
+                        methodTitle.textContent = 'Image negatives';
+                        methodTitle.classList.add('method-title');
+
+                        wrapper.append(methodTitle, applyButton);
+
+                        return wrapper;
+                    })(),
+                    tooltip: document.createElement('p')
+                        .textContent = `Select the gamma correction level by moving the slider
+                            or entering it into the input box.`
                 }
             }
         };
@@ -76,7 +97,7 @@ class MethodCustomizationStage extends Stage {
         const slider = document.createElement('input');
         const sliderTo = document.createElement('span');
         const sliderFrom = document.createElement('span');
-        const sliderTitle = document.createElement('span');
+        const methodTitle = document.createElement('span');
         const sliderValue = document.createElement('input');
         const applyButton = document.createElement('button');
         const sliderSettings = document.createElement('div');
@@ -98,9 +119,9 @@ class MethodCustomizationStage extends Stage {
         sliderRangeWrapper.classList.add('range-wrapper');
         sliderRangeWrapper.append(sliderFrom, sliderTo);
         
-        // Slider title
-        sliderTitle.textContent = sliderTitleText;
-        sliderTitle.classList.add('slider-title');
+        // Method title
+        methodTitle.textContent = sliderTitleText;
+        methodTitle.classList.add('method-title');
         
         // Slider
         slider.min = min;
@@ -150,7 +171,7 @@ class MethodCustomizationStage extends Stage {
         // Container
         sliderContainer.classList.add('slider-container');
         sliderContainer.append(
-            sliderTitle, sliderSettings, sliderValueWrapper, applyButtonWrapper
+            methodTitle, sliderSettings, sliderValueWrapper, applyButtonWrapper
         );
 
         return sliderContainer;

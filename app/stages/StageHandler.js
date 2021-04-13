@@ -44,6 +44,13 @@ class StageHandler {
                 'ImageController',
                 'gammaCorrectionBootsrap'
             ]
+        }, {
+            text: 'Image negatives',
+            name: 'imageNegatives',
+            registrator: [
+                'ImageController',
+                'imageNegativesBootsrap'
+            ]
         }];
 
         return new this([

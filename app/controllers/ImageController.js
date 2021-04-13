@@ -54,4 +54,8 @@ class ImageController {
     gammaCorrectionBootsrap(stage, router) {
         this._service.registerGammaCorrectionHandlers(stage, router);
     }
+
+    imageNegativesBootsrap(stage, router) {
+        this._service.registerImageNegativesHandlers(stage, router);
+    }
 }
