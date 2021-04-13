@@ -18,11 +18,20 @@
     }
 
     run() {
-        this._handleStage();
+        this._bootstrapStage();
     }
 
-    _handleStage() {
-        this._stageHandler.getActiveStage().bootstrap(this._router);
+    /**
+     * 
+     * @param {boolean} bootstrap 
+     */
+    _bootstrapStage() {
+        this._stageHandler.getActiveStage().bootstrap(this._router);  
+    }
+
+    _terminateStage() {
+        console.log(12);
+        this._stageHandler.getActiveStage().terminate(this._router);
     }
 
     proceed() {
@@ -33,7 +42,7 @@
 
         if (buttonState.active && this._stageHandler.nextStageExists()) { 
             this._stageHandler.switchToNextStage();
-            this._handleStage();
+            this._bootstrapStage();
 
             panelController.changeButtonState('next', {
                 active: this._stageHandler.getActiveStage().done
@@ -54,9 +63,9 @@
         const buttonState = panelController.retrieveButtonState('back');
 
         if (buttonState.active && this._stageHandler.previousStageExists()) {
-            this._stageHandler.getActiveStage().terminate();
+            this._terminateStage();
             this._stageHandler.switchToPreviousStage();
-            this._handleStage();
+            this._bootstrapStage();
 
             panelController.changeButtonState('back', {
                 active: this._stageHandler.previousStageExists()
