@@ -30,7 +30,6 @@
     }
 
     _terminateStage() {
-        console.log(12);
         this._stageHandler.getActiveStage().terminate(this._router);
     }
 
