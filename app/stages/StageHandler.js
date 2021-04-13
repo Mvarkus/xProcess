@@ -17,14 +17,14 @@ class StageHandler {
      */
     static build() {
         const supportedMethods = [{
-            text: 'adjust brightess',
+            text: 'Adjust brightess',
             name: 'adjustBrightness',
             registrator: [
                 'ImageController',
                 'adjustBrightnessBootstrap'
             ]
         }, {
-            text: 'adjust contrast',
+            text: 'Adjust contrast',
             name: 'adjustContrast',
             registrator: [
                 'ImageController',
