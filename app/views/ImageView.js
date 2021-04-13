@@ -8,6 +8,11 @@ class ImageView {
         this._redraw = false;
     }
 
+    _getColorIndices(x, y, width) {
+        const index = x * 4 + y * (width * 4);
+        return [index, index + 1, index + 2, index + 3];
+    }
+
     alterBrightness(value) {
         if (this._redraw) {
             this.drawImage().then(() => {
@@ -25,14 +30,12 @@ class ImageView {
                 this._imageBoxParts.canvas.height
             );
 
-            const getColorIndices = (x, y, width) => {
-                const index = x * 4 + y * (width * 4);
-                return [index, index + 1, index + 2, index + 3];
-            };
-
             for (let x = 0; x < imageData.width; x++) {
                 for (let y = 0; y < imageData.height; y++) {
-                    const [red, green, blue, alpha] = getColorIndices(x, y, imageData.width);
+                    const [red, green, blue, alpha] = this._getColorIndices(
+                        x, y, imageData.width
+                    );
+
                     [
                         imageData.data[red],
                         imageData.data[green],
@@ -48,9 +51,48 @@ class ImageView {
             }
 
             context.putImageData(imageData, 0, 0);
-
         }
+    }
 
+    alterContrast(value) {
+        if (this._redraw) {
+            this.drawImage().then(() => {
+                this._redraw = false;
+                this.alterContrast(value);
+            });
+        } else {
+            this._redraw = true;
+
+            const context = this._imageBoxParts.canvas.getContext('2d');
+            const imageData = context.getImageData(
+                0,
+                0,
+                this._imageBoxParts.canvas.width,
+                this._imageBoxParts.canvas.height
+            );
+
+            for (let x = 0; x < imageData.width; x++) {
+                for (let y = 0; y < imageData.height; y++) {
+                    const [red, green, blue, alpha] = this._getColorIndices(
+                        x, y, imageData.width
+                    );
+
+                    [
+                        imageData.data[red],
+                        imageData.data[green],
+                        imageData.data[blue],
+                        imageData.data[alpha],
+                    ] = [
+                        imageData.data[red] * value,
+                        imageData.data[green] * value,
+                        imageData.data[blue] * value,
+                        imageData.data[alpha],
+                    ];  
+                }
+            }
+
+            context.putImageData(imageData, 0, 0);
+        }
     }
 
     set imageFile(file) { this._imageFile = file };

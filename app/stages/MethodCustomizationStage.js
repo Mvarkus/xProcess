@@ -19,12 +19,21 @@ class MethodCustomizationStage extends Stage {
         return {
             controls: {
                 'adjustBrightness': this._buildSlider({
-                    min: -235, 
-                    max: 235, 
+                    min: -235,
+                    labelText: "value",
+                    step: 1,
+                    max: 235,
                     startValue: 0, 
                     sliderTitleText: 'Adjust Brightness'
                 }),
-                'adjustContrast': ''
+                'adjustContrast': this._buildSlider({
+                    min: 0.1,
+                    labelText: "value",
+                    step: 0.05,
+                    max: 10, 
+                    startValue: 1, 
+                    sliderTitleText: 'Adjust Contrast'
+                })
             },
             tooltip: tooltip
         };
@@ -44,7 +53,7 @@ class MethodCustomizationStage extends Stage {
         const sliderValueWrapper = document.createElement('div');
         const applyButtonWrapper = document.createElement('div');
 
-        const {min, max, startValue, sliderTitleText} = settings;
+        const {min, max, startValue, sliderTitleText, step, labelText} = settings;
 
         // Slider range
         sliderFrom.classList.add('slider-from');
@@ -63,6 +72,7 @@ class MethodCustomizationStage extends Stage {
         // Slider
         slider.min = min;
         slider.max = max;
+        slider.step = step;
         slider.type = 'range';
         slider.value = startValue;
         slider.userMousedown = false;
@@ -73,6 +83,7 @@ class MethodCustomizationStage extends Stage {
 
         // Slider value
         sliderValue.type = 'number';
+        sliderValue.step = step;
         sliderValue.value = startValue;
         sliderValue.classList.add('slider-value');
         sliderValue.id = 'slider-value-id'
@@ -90,7 +101,7 @@ class MethodCustomizationStage extends Stage {
         slider.onmousedown = () => slider.userMousedown = true;
         slider.onmouseup = () => slider.userMousedown = false;
 
-        sliderValueLabel.textContent = 'slider value';
+        sliderValueLabel.textContent = labelText;
         sliderValueLabel.htmlFor = 'slider-value-id';
 
         sliderValueWrapper.classList.add('slider-value-wrapper');

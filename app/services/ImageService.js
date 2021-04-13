@@ -84,6 +84,30 @@ class ImageService {
     }
 
     /**
+     * @param {Stage} stage instance
+     * @param {Router} router instance
+     */
+    registerAdjustContrastHandlers(stage, router) {
+        const container = stage.getDomComponents()
+            .controls[this._chosenMethodContext.name];
+        console.log(container);
+        const button = container.querySelector('button');
+        const input = container.querySelector('.slider-value');
+        const slider = container.querySelector('.slider');
+        const min = slider.min, max = slider.max;
+        
+        button.addEventListener('click', (event) => {
+            if (+input.value > max) {
+                input.value = max
+            } else if (+input.value < min) {
+                input.value = min
+            }
+        
+            this._view.alterContrast(+input.value);
+        });
+    }
+
+    /**
      * @param {File} imageFile instance
      */
     _isImage(imageFile) {

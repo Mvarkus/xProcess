@@ -36,6 +36,6 @@ class ImageController {
     }
 
     adjustContrastBootstrap(stage, router) {
-        console.log(stage);
+        this._service.registerAdjustContrastHandlers(stage, router);
     }
 }
