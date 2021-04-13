@@ -42,14 +42,12 @@ class PanelController {
         const methodsContext = router.getController('ImageController')
             .retrieveChosenMethodContext();
         const [controller, action] = methodsContext.registrator;
+        const controls = stage.getDomComponents().controls[methodsContext.name]
 
-        this._service.renderUpdate(
-            'body', stage.getDomComponents().controls[methodsContext.name]
-        );
 
-        this._service.renderUpdate(
-            'tooltip', stage.getDomComponents().tooltip
-        );
+        this._service.renderUpdate('body', controls.elements);
+
+        this._service.renderUpdate('tooltip', controls.tooltip);
 
         router.getController(controller)[action](stage, router);
     }

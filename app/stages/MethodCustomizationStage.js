@@ -13,29 +13,46 @@ class MethodCustomizationStage extends Stage {
      * @inheritdoc
      */
     _build() {
-        const tooltip = document.createElement('p');
-        tooltip.textContent = 'Adjust settings to alter the image';
-
         return {
             controls: {
-                'adjustBrightness': this._buildSlider({
-                    min: -235,
-                    labelText: "value",
-                    step: 1,
-                    max: 235,
-                    startValue: 0, 
-                    sliderTitleText: 'Adjust Brightness'
-                }),
-                'adjustContrast': this._buildSlider({
-                    min: 0.1,
-                    labelText: "value",
-                    step: 0.05,
-                    max: 10, 
-                    startValue: 1, 
-                    sliderTitleText: 'Adjust Contrast'
-                })
-            },
-            tooltip: tooltip
+                adjustBrightness: {
+                    elements: this._buildSlider({
+                        min: -235,
+                        labelText: "value",
+                        step: 1,
+                        max: 235,
+                        startValue: 0, 
+                        sliderTitleText: 'Adjust Brightness'
+                    }),
+                    tooltip: document.createElement('p')
+                        .textContent = 'Move slider or insert value to alter brightness.'
+                },
+                adjustContrast: {
+                    elements: this._buildSlider({
+                        min: 0.1,
+                        labelText: "value",
+                        step: 0.05,
+                        max: 5,
+                        startValue: 1, 
+                        sliderTitleText: 'Adjust Contrast'
+                    }),
+                    tooltip: document.createElement('p')
+                        .textContent = `Move slider or insert value to alter contrast. 
+                            values lower than 1 will decrease contrast, higher than 1 increase.`
+                },
+                sharpenImage: {
+                    elements: this._buildSlider({
+                        min: 0,
+                        labelText: "Level",
+                        step: 1,
+                        max: 10,
+                        startValue: 1, 
+                        sliderTitleText: 'Image sharpen'
+                    }),
+                    tooltip: document.createElement('p')
+                        .textContent = 'Select the sharpening level by moving the slider or entering into the input box.'
+                }
+            }
         };
     }
 
@@ -113,7 +130,6 @@ class MethodCustomizationStage extends Stage {
 
         applyButtonWrapper.classList.add('slider-apply-wrapper');
         applyButtonWrapper.append(applyButton);
-
 
         // Container
         sliderContainer.classList.add('slider-container');
