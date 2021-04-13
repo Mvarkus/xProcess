@@ -114,14 +114,14 @@ header .logo h1 {
 /* Control panel */
 
 .wrapper {
-  width: 80%;
+  width: 94%;
   margin: 3em auto;
   display: flex;
   justify-content: center;
 }
 
 .control-panel {
-  flex: 3;
+  flex: 2;
   position: relative;
   border: .15em solid #E4E4E4;
 }
