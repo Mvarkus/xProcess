@@ -90,7 +90,6 @@ class ImageService {
     registerAdjustContrastHandlers(stage, router) {
         const container = stage.getDomComponents()
             .controls[this._chosenMethodContext.name];
-        console.log(container);
         const button = container.querySelector('button');
         const input = container.querySelector('.slider-value');
         const slider = container.querySelector('.slider');
