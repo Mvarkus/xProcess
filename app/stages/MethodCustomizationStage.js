@@ -25,32 +25,48 @@ class MethodCustomizationStage extends Stage {
                         sliderTitleText: 'Adjust Brightness'
                     }),
                     tooltip: document.createElement('p')
-                        .textContent = 'Move slider or insert value to alter brightness.'
+                        .textContent = `Select the brightness altering level by moving the slider
+                            or entering it into the input box`
                 },
                 adjustContrast: {
                     elements: this._buildSlider({
                         min: 0.1,
-                        labelText: "value",
+                        labelText: "level",
                         step: 0.05,
                         max: 5,
                         startValue: 1, 
                         sliderTitleText: 'Adjust Contrast'
                     }),
                     tooltip: document.createElement('p')
-                        .textContent = `Move slider or insert value to alter contrast. 
-                            values lower than 1 will decrease contrast, higher than 1 increase.`
+                        .textContent = `Select the contrast altering level by moving the slider
+                            or entering it into the input box. Values lower than 
+                            1 will decrease contrast, higher than 1 increase.`
                 },
                 sharpenImage: {
                     elements: this._buildSlider({
                         min: 0,
-                        labelText: "Level",
+                        labelText: "level",
                         step: 1,
                         max: 10,
                         startValue: 1, 
                         sliderTitleText: 'Image sharpen'
                     }),
                     tooltip: document.createElement('p')
-                        .textContent = 'Select the sharpening level by moving the slider or entering into the input box.'
+                        .textContent = `Select the sharpening level by moving the slider
+                             or entering it into the input box.`
+                },
+                gammaCorrection: {
+                    elements: this._buildSlider({
+                        min: 0.1,
+                        labelText: "level",
+                        step: 0.1,
+                        max: 4,
+                        startValue: 1, 
+                        sliderTitleText: 'Gamma correction'
+                    }),
+                    tooltip: document.createElement('p')
+                        .textContent = `Select the gamma correction level by moving the slider
+                            or entering it into the input box.`
                 }
             }
         };

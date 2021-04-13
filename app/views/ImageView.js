@@ -126,6 +126,48 @@ class ImageView {
         }
     }
 
+    correctGamma(gamma) {
+        if (this._redraw) {
+            this.drawImage().then(() => {
+                this._redraw = false;
+                this.correctGamma(gamma);
+            });
+        } else {
+            this._redraw = true;
+            const gammaCorrection = 1 / gamma;
+
+            const context = this._imageBoxParts.canvas.getContext('2d');
+            const imageData = context.getImageData(
+                0,
+                0,
+                this._imageBoxParts.canvas.width,
+                this._imageBoxParts.canvas.height
+            );
+
+            for (let x = 0; x < imageData.width; x++) {
+                for (let y = 0; y < imageData.height; y++) {
+                    const [red, green, blue, alpha] = this._getColorIndices(
+                        x, y, imageData.width
+                    );
+
+                    [
+                        imageData.data[red],
+                        imageData.data[green],
+                        imageData.data[blue],
+                        imageData.data[alpha]
+                    ] = [
+                        255 * Math.pow((imageData.data[red] / 255), gammaCorrection),
+                        255 * Math.pow((imageData.data[green] / 255), gammaCorrection),
+                        255 * Math.pow((imageData.data[blue] / 255), gammaCorrection),
+                        imageData.data[alpha]
+                    ];    
+                }
+            }
+
+            context.putImageData(imageData, 0, 0);
+        }
+    }
+
     set imageFile(file) { this._imageFile = file };
 
     /**

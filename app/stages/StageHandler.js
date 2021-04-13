@@ -37,6 +37,13 @@ class StageHandler {
                 'ImageController',
                 'sharpenImageBootstrap'
             ]
+        }, {
+            text: 'Gamma correction',
+            name: 'gammaCorrection',
+            registrator: [
+                'ImageController',
+                'gammaCorrectionBootsrap'
+            ]
         }];
 
         return new this([
@@ -55,6 +62,9 @@ class StageHandler {
             new MethodCustomizationStage({
                 bootstrap: [
                     ['PanelController', 'switchToCustomizationStage']
+                ],
+                terminate: [
+                    ['ImageController', 'terminateCustomizationStage']
                 ]
             }, supportedMethods)
         ]);

@@ -131,6 +131,29 @@ class ImageService {
     }
 
     /**
+     * @param {Stage} stage instance
+     * @param {Router} router instance
+     */
+    registerGammaCorrectionHandlers(stage, router) {
+        const container = stage.getDomComponents()
+            .controls[this._chosenMethodContext.name].elements;
+        const button = container.querySelector('button');
+        const input = container.querySelector('.slider-value');
+        const slider = container.querySelector('.slider');
+        const min = slider.min, max = slider.max;
+        
+        button.addEventListener('click', (event) => {
+            if (+input.value > max) {
+                input.value = max
+            } else if (+input.value < min) {
+                input.value = min
+            }
+        
+            this._view.correctGamma(+input.value);
+        });
+    }
+
+    /**
      * @param {File} imageFile instance
      */
     _isImage(imageFile) {
@@ -148,8 +171,13 @@ class ImageService {
         return this._chosenMethodContext;
     }
 
-    setupImageBox(imageFile) {
-        this._view.drawImage(imageFile);
-        this._view.updateMetaData(imageFile);
+    redrawImage() {
+        console.log('redrwa');
+        this._view.drawImage();
+    }
+
+    setupImageBox() {
+        this._view.drawImage();
+        this._view.updateMetaData();
     }
 }

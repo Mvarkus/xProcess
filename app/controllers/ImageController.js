@@ -25,6 +25,14 @@ class ImageController {
             stage, router
         );
     }
+
+    /**
+     * @param {Stage} stage instance 
+     * @param {Router} router instance
+     */
+    terminateCustomizationStage(stage, router) {
+        this._service.redrawImage();
+    }
     
 
     retrieveChosenMethodContext() {
@@ -41,5 +49,9 @@ class ImageController {
 
     sharpenImageBootstrap(stage, router) {
         this._service.registerSharpenImageHandlers(stage, router);
+    }
+
+    gammaCorrectionBootsrap(stage, router) {
+        this._service.registerGammaCorrectionHandlers(stage, router);
     }
 }
