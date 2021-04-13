@@ -66,7 +66,8 @@ class ImageService {
      */
     registerAdjustBrightnessHandlers(stage, router) {
         const container = stage.getDomComponents()
-            .controls[this._chosenMethodContext.name];
+            .controls[this._chosenMethodContext.name].elements;
+        console.log(container);
         const button = container.querySelector('button');
         const input = container.querySelector('.slider-value');
         const slider = container.querySelector('.slider');
@@ -89,7 +90,7 @@ class ImageService {
      */
     registerAdjustContrastHandlers(stage, router) {
         const container = stage.getDomComponents()
-            .controls[this._chosenMethodContext.name];
+            .controls[this._chosenMethodContext.name].elements;
         const button = container.querySelector('button');
         const input = container.querySelector('.slider-value');
         const slider = container.querySelector('.slider');
@@ -103,6 +104,29 @@ class ImageService {
             }
         
             this._view.alterContrast(+input.value);
+        });
+    }
+
+    /**
+     * @param {Stage} stage instance
+     * @param {Router} router instance
+     */
+    registerSharpenImageHandlers(stage, router) {
+        const container = stage.getDomComponents()
+            .controls[this._chosenMethodContext.name].elements;
+        const button = container.querySelector('button');
+        const input = container.querySelector('.slider-value');
+        const slider = container.querySelector('.slider');
+        const min = slider.min, max = slider.max;
+        
+        button.addEventListener('click', (event) => {
+            if (+input.value > max) {
+                input.value = max
+            } else if (+input.value < min) {
+                input.value = min
+            }
+        
+            this._view.sharpenImage(+input.value);
         });
     }
 

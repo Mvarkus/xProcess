@@ -87,11 +87,42 @@ class ImageView {
                         imageData.data[green] * value,
                         imageData.data[blue] * value,
                         imageData.data[alpha],
-                    ];  
+                    ];
                 }
             }
 
             context.putImageData(imageData, 0, 0);
+        }
+    }
+
+    sharpenImage(amount) {
+        if (this._redraw) {
+            this.drawImage().then(() => {
+                this._redraw = false;
+                this.sharpenImage(amount);
+            });
+        } else {
+            this._redraw = true;
+            if (amount < 1) {return}
+            const src = cv.imread(this._imageBoxParts.canvas);
+            const laplasianResult = new cv.Mat(),
+                subsctrationResult = new cv.Mat(),
+                mask = new cv.Mat();
+
+            // cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
+            cv.Laplacian(src, laplasianResult, cv.CV_8U, 1, 1, 0, cv.BORDER_DEFAULT);
+
+            cv.subtract(src, laplasianResult, subsctrationResult, mask, -1);
+
+            for (let i = 1; i <= amount; i++) {
+                cv.subtract(subsctrationResult, laplasianResult, subsctrationResult, mask, -1);
+            }
+
+            cv.imshow(this._imageBoxParts.canvas, subsctrationResult);
+            src.delete();
+            laplasianResult.delete();
+            subsctrationResult.delete();
+            mask.delete();
         }
     }
 

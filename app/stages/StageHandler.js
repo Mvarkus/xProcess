@@ -30,6 +30,13 @@ class StageHandler {
                 'ImageController',
                 'adjustContrastBootstrap'
             ]
+        }, {
+            text: 'Improve sharpness',
+            name: 'sharpenImage',
+            registrator: [
+                'ImageController',
+                'sharpenImageBootstrap'
+            ]
         }];
 
         return new this([

@@ -38,4 +38,8 @@ class ImageController {
     adjustContrastBootstrap(stage, router) {
         this._service.registerAdjustContrastHandlers(stage, router);
     }
+
+    sharpenImageBootstrap(stage, router) {
+        this._service.registerSharpenImageHandlers(stage, router);
+    }
 }
