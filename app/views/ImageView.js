@@ -240,6 +240,24 @@ class ImageView {
         }
     }
 
+    detectEdgeCanny(min, max) {
+        if (this._redraw) {
+            this.drawImage().then(() => {
+                this._redraw = false;
+                this.detectEdgeCanny(min, max);
+            });
+        } else {
+            this._redraw = true;
+           
+            const src = cv.imread(this._imageBoxParts.canvas);
+            const dst = new cv.Mat();
+            cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
+            cv.Canny(src, dst, min, max, 3, true);
+            cv.imshow(this._imageBoxParts.canvas, dst);
+            src.delete(); dst.delete();
+        }
+    }
+
     set imageFile(file) { this._imageFile = file };
 
     /**

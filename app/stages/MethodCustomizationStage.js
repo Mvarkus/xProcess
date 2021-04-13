@@ -16,54 +16,50 @@ class MethodCustomizationStage extends Stage {
         return {
             controls: {
                 adjustBrightness: {
-                    elements: this._buildSlider({
+                    elements: this._buildSliders('Adjust Brightness', [{
                         min: -235,
                         labelText: "value",
                         step: 1,
                         max: 235,
-                        startValue: 0, 
-                        sliderTitleText: 'Adjust Brightness'
-                    }),
+                        startValue: 0
+                    }]),
                     tooltip: document.createElement('p')
                         .textContent = `Select the brightness altering level by moving the slider
                             or entering it into the input box`
                 },
                 adjustContrast: {
-                    elements: this._buildSlider({
+                    elements: this._buildSliders('Adjust Contrast', [{
                         min: 0.1,
                         labelText: "level",
                         step: 0.05,
                         max: 5,
-                        startValue: 1, 
-                        sliderTitleText: 'Adjust Contrast'
-                    }),
+                        startValue: 1
+                    }]),
                     tooltip: document.createElement('p')
                         .textContent = `Select the contrast altering level by moving the slider
                             or entering it into the input box. Values lower than 
                             1 will decrease contrast, higher than 1 increase.`
                 },
                 sharpenImage: {
-                    elements: this._buildSlider({
+                    elements: this._buildSliders('Image sharpen', [{
                         min: 0,
                         labelText: "level",
                         step: 1,
                         max: 10,
-                        startValue: 1, 
-                        sliderTitleText: 'Image sharpen'
-                    }),
+                        startValue: 1
+                    }]),
                     tooltip: document.createElement('p')
                         .textContent = `Select the sharpening level by moving the slider
                              or entering it into the input box.`
                 },
                 gammaCorrection: {
-                    elements: this._buildSlider({
+                    elements: this._buildSliders('Gamma correction', [{
                         min: 0.1,
                         labelText: "level",
                         step: 0.1,
                         max: 7,
-                        startValue: 1, 
-                        sliderTitleText: 'Gamma correction'
-                    }),
+                        startValue: 1
+                    }]),
                     tooltip: document.createElement('p')
                         .textContent = `Select the gamma correction level by moving the slider
                             or entering it into the input box.`
@@ -73,7 +69,7 @@ class MethodCustomizationStage extends Stage {
                         const applyButton = document.createElement('button');
                         const methodTitle = document.createElement('span');
                         const wrapper = document.createElement('div');
-                        
+
                         applyButton.classList.add('panel-button');
                         applyButton.textContent = 'apply';
 
@@ -90,90 +86,113 @@ class MethodCustomizationStage extends Stage {
                             or entering it into the input box.`
                 },
                 logTransform: {
-                    elements: this._buildSlider({
+                    elements: this._buildSliders('Log transform', [{
                         min: 30,
                         labelText: "level",
                         step: 1,
                         max: 100,
-                        startValue: 30, 
-                        sliderTitleText: 'Log transform'
-                    }),
+                        startValue: 30
+                    }]),
                     tooltip: document.createElement('p')
                         .textContent = `Select the tranformation level by moving the slider
                              or entering it into the input box.`
                 },
+                cannyEdgeDetection: {
+                    elements: this._buildSliders('Edge detection (Canny)', [{
+                        min: 1,
+                        labelText: "min tresh:",
+                        step: 1,
+                        max: 255,
+                        startValue: 1
+                    }, {
+                        min: 1,
+                        labelText: "max thresh:",
+                        step: 1,
+                        max: 255,
+                        startValue: 1
+                }]),
+                    tooltip: document.createElement('p')
+                        .textContent = `Select the tranformation level by moving the slider
+                             or entering it into the input box.`
+                }
             }
         };
     }
 
-    _buildSlider(settings) {
-        const slider = document.createElement('input');
-        const sliderTo = document.createElement('span');
-        const sliderFrom = document.createElement('span');
-        const methodTitle = document.createElement('span');
-        const sliderValue = document.createElement('input');
+    _buildSliders(methodTitleText, settings) {
         const applyButton = document.createElement('button');
-        const sliderSettings = document.createElement('div');
+        const methodTitle = document.createElement('span');
+        const slidersWrapper = document.createDocumentFragment()
         const sliderContainer = document.createElement('div');
-        const sliderValueLabel = document.createElement('label');
-        const sliderRangeWrapper = document.createElement('div');
-        const sliderValueWrapper = document.createElement('div');
         const applyButtonWrapper = document.createElement('div');
 
-        const {min, max, startValue, sliderTitleText, step, labelText} = settings;
+        for (let i = 0; i < settings.length; i++) {
+            let slider = document.createElement('input');
+            let sliderTo = document.createElement('span');
+            let sliderFrom = document.createElement('span');
+            let sliderValue = document.createElement('input');
+            let sliderSettings = document.createElement('div');
+            let sliderValueLabel = document.createElement('label');
+            let sliderRangeWrapper = document.createElement('div');
+            let sliderValueWrapper = document.createElement('div');
 
-        // Slider range
-        sliderFrom.classList.add('slider-from');
-        sliderFrom.textContent = min;
+            let {min, max, startValue, step, labelText} = settings[i];
 
-        sliderTo.classList.add('slider-to');
-        sliderTo.textContent = max;
+            // Slider
+            slider.min = min;
+            slider.max = max;
+            slider.step = step;
+            slider.type = 'range';
+            slider.value = startValue;
+            slider.userMousedown = false;
+            slider.classList.add('slider');
 
-        sliderRangeWrapper.classList.add('range-wrapper');
-        sliderRangeWrapper.append(sliderFrom, sliderTo);
-        
+            sliderSettings.classList.add('slider-settings');
+            sliderSettings.append(slider, sliderRangeWrapper);
+
+            // Slider range
+            sliderFrom.classList.add('slider-from');
+            sliderFrom.textContent = min;
+
+            sliderTo.classList.add('slider-to');
+            sliderTo.textContent = max;
+
+            sliderRangeWrapper.classList.add('range-wrapper');
+            sliderRangeWrapper.append(sliderFrom, sliderTo);
+
+            // Slider value
+            sliderValue.type = 'number';
+            sliderValue.step = step;
+            sliderValue.value = startValue;
+            sliderValue.classList.add('slider-value');
+            sliderValue.id = 'slider-value-id'
+
+            slider.addEventListener('change', (event) => {
+                sliderValue.value = event.target.value;
+            });
+
+            slider.addEventListener('mousemove', (event) => {
+                if (slider.userMousedown) {
+                    slider.dispatchEvent(new Event('change'));
+                }
+            });
+
+            slider.onmousedown = () => slider.userMousedown = true;
+            slider.onmouseup = () => slider.userMousedown = false;
+
+            sliderValueLabel.textContent = labelText;
+            sliderValueLabel.htmlFor = 'slider-value-id';
+
+            sliderValueWrapper.classList.add('slider-value-wrapper');
+            sliderValueWrapper.append(sliderValueLabel, sliderValue);
+
+            slidersWrapper.append(sliderSettings, sliderValueWrapper);
+        }
+
         // Method title
-        methodTitle.textContent = sliderTitleText;
+        methodTitle.textContent = methodTitleText;
         methodTitle.classList.add('method-title');
-        
-        // Slider
-        slider.min = min;
-        slider.max = max;
-        slider.step = step;
-        slider.type = 'range';
-        slider.value = startValue;
-        slider.userMousedown = false;
-        slider.classList.add('slider');
 
-        sliderSettings.classList.add('slider-settings');
-        sliderSettings.append(slider, sliderRangeWrapper);
-
-        // Slider value
-        sliderValue.type = 'number';
-        sliderValue.step = step;
-        sliderValue.value = startValue;
-        sliderValue.classList.add('slider-value');
-        sliderValue.id = 'slider-value-id'
-
-        slider.addEventListener('change', (event) => {
-            sliderValue.value = event.target.value;
-        });
-
-        slider.addEventListener('mousemove', (event) => {
-            if (slider.userMousedown) {
-                slider.dispatchEvent(new Event('change'));
-            }
-        });
-
-        slider.onmousedown = () => slider.userMousedown = true;
-        slider.onmouseup = () => slider.userMousedown = false;
-
-        sliderValueLabel.textContent = labelText;
-        sliderValueLabel.htmlFor = 'slider-value-id';
-
-        sliderValueWrapper.classList.add('slider-value-wrapper');
-        sliderValueWrapper.append(sliderValueLabel, sliderValue);
-        
         // Button
         applyButton.classList.add('panel-button');
         applyButton.textContent = 'apply';
@@ -184,7 +203,7 @@ class MethodCustomizationStage extends Stage {
         // Container
         sliderContainer.classList.add('slider-container');
         sliderContainer.append(
-            methodTitle, sliderSettings, sliderValueWrapper, applyButtonWrapper
+            methodTitle, slidersWrapper, applyButtonWrapper
         );
 
         return sliderContainer;

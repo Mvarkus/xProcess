@@ -58,6 +58,13 @@ class StageHandler {
                 'ImageController',
                 'logTransformBootsrap'
             ]
+        }, {
+            text: 'Edge detection (Canny)',
+            name: 'cannyEdgeDetection',
+            registrator: [
+                'ImageController',
+                'cannyEdgeDetectionBootstrap'
+            ]
         }];
 
         return new this([

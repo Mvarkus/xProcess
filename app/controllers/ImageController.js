@@ -62,4 +62,10 @@ class ImageController {
     logTransformBootsrap(stage, router) {
         this._service.registerLogTransformHandlers(stage, router);
     }
+
+    cannyEdgeDetectionBootstrap(stage, router) {
+        this._service.registerCannyEdgeDetectionHandlers(stage, router);
+    }
+
+    
 }
