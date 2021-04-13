@@ -171,6 +171,10 @@ class MethodCustomizationStage extends Stage {
                 sliderValue.value = event.target.value;
             });
 
+            sliderValue.addEventListener('change', (event) => {
+                slider.value = sliderValue.value;
+            });
+
             slider.addEventListener('mousemove', (event) => {
                 if (slider.userMousedown) {
                     slider.dispatchEvent(new Event('change'));
