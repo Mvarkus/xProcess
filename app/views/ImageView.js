@@ -287,6 +287,7 @@ class ImageView {
      */
     updateMetaData() {
         const filename = document.createElement('span');
+        this._imageBoxParts.meta.innerHTML = '';
         filename.textContent = this._imageFile.name;
 
         this._imageBoxParts.meta.append(filename);
