@@ -4,7 +4,7 @@ class ImageView {
      */
     constructor(imageBoxParts) {
         this._imageBoxParts = imageBoxParts;
-        this._imageFile = null
+        this._imageBlob = null
         this._redraw = false;
     }
 
@@ -295,7 +295,7 @@ class ImageView {
         }
     }
 
-    set imageFile(file) { this._imageFile = file };
+    set imageBlob(blob) { this._imageBlob = blob };
 
     /**
      * @param {File} imageFile instance
@@ -303,7 +303,7 @@ class ImageView {
     drawImage() {
         return new Promise((resolve) => {
             const image = new Image();
-            image.src = URL.createObjectURL(this._imageFile);
+            image.src = URL.createObjectURL(this._imageBlob);
 
             image.onload = () => {
                 const context = this._imageBoxParts.canvas.getContext("2d");
@@ -325,8 +325,14 @@ class ImageView {
     updateMetaData() {
         const filename = document.createElement('span');
         this._imageBoxParts.meta.innerHTML = '';
-        filename.textContent = this._imageFile.name;
+        filename.textContent = this._imageBlob.name;
 
         this._imageBoxParts.meta.append(filename);
+    }
+
+    saveImage() {
+        this._imageBoxParts.canvas.toBlob((blob) => {
+            this._imageBlob = blob;
+        }, this._imageBlob.type);
     }
 }
