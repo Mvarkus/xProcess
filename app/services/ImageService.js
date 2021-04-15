@@ -64,126 +64,61 @@ class ImageService {
      * @param {Stage} stage instance
      * @param {Router} router instance
      */
-    registerAdjustBrightnessHandlers(stage, router) {
-        const container = stage.getDomComponents()
-            .controls[this._chosenMethodContext.name].elements;
-        console.log(container);
-        const button = container.querySelector('button');
-        const input = container.querySelector('.slider-value');
-        const slider = container.querySelector('.slider');
-        const min = slider.min, max = slider.max;
-        
-        button.addEventListener('click', (event) => {
-            if (+input.value > max) {
-                input.value = max
-            } else if (+input.value < min) {
-                input.value = min
-            }
-        
-            this._view.alterBrightness(+input.value);
-        });
+    registerAdjustBrightnessHandlers(stage) {
+        this._slidersApplyButtonRegistration(stage, this._view.alterBrightness);
     }
 
     /**
      * @param {Stage} stage instance
      * @param {Router} router instance
      */
-    registerAdjustContrastHandlers(stage, router) {
-        const container = stage.getDomComponents()
-            .controls[this._chosenMethodContext.name].elements;
-        const button = container.querySelector('button');
-        const input = container.querySelector('.slider-value');
-        const slider = container.querySelector('.slider');
-        const min = slider.min, max = slider.max;
-        
-        button.addEventListener('click', (event) => {
-            if (+input.value > max) {
-                input.value = max
-            } else if (+input.value < min) {
-                input.value = min
-            }
-        
-            this._view.alterContrast(+input.value);
-        });
+    registerAdjustContrastHandlers(stage) {
+        this._slidersApplyButtonRegistration(stage, this._view.alterContrast);
     }
 
     /**
      * @param {Stage} stage instance
      * @param {Router} router instance
      */
-    registerSharpenImageHandlers(stage, router) {
-        const container = stage.getDomComponents()
-            .controls[this._chosenMethodContext.name].elements;
-        const button = container.querySelector('button');
-        const input = container.querySelector('.slider-value');
-        const slider = container.querySelector('.slider');
-        const min = slider.min, max = slider.max;
-        
-        button.addEventListener('click', (event) => {
-            if (+input.value > max) {
-                input.value = max
-            } else if (+input.value < min) {
-                input.value = min
-            }
-        
-            this._view.sharpenImage(+input.value);
-        });
+    registerSharpenImageHandlers(stage) {
+        this._slidersApplyButtonRegistration(stage, this._view.sharpenImage);
     }
 
     /**
      * @param {Stage} stage instance
-     * @param {Router} router instance
      */
-    registerGammaCorrectionHandlers(stage, router) {
-        const container = stage.getDomComponents()
-            .controls[this._chosenMethodContext.name].elements;
-        const button = container.querySelector('button');
-        const input = container.querySelector('.slider-value');
-        const slider = container.querySelector('.slider');
-        const min = slider.min, max = slider.max;
-        
-        button.addEventListener('click', (event) => {
-            if (+input.value > max) {
-                input.value = max
-            } else if (+input.value < min) {
-                input.value = min
-            }
-        
-            this._view.correctGamma(+input.value);
-        });
+    registerGammaCorrectionHandlers(stage) {
+        this._slidersApplyButtonRegistration(stage, this._view.correctGamma);
     }
 
-    registerImageNegativesHandlers(stage, router) {
+    registerImageNegativesHandlers(stage) {
         const applyButton = stage.getDomComponents()
             .controls[this._chosenMethodContext.name].elements.querySelector('button');
 
-        applyButton.addEventListener('click', (event) => {
+        applyButton.addEventListener('click', () => {
             this._view.imageNegatives();
         });
     }
 
-    registerLogTransformHandlers(stage, router) {
-        const container = stage.getDomComponents()
-            .controls[this._chosenMethodContext.name].elements;
-        const button = container.querySelector('button');
-        const input = container.querySelector('.slider-value');
-        const slider = container.querySelector('.slider');
-        const min = slider.min, max = slider.max;
-        
-        button.addEventListener('click', (event) => {
-            if (+input.value > max) {
-                input.value = max
-            } else if (+input.value < min) {
-                input.value = min
-            }
-        
-            this._view.logTransform(+input.value);
-        });
+    registerLogTransformHandlers(stage) {
+        this._slidersApplyButtonRegistration(stage, this._view.logTransform);
     }
 
-    registerCannyEdgeDetectionHandlers(stage, router) {
+    registerCannyEdgeDetectionHandlers(stage) { 
+        this._slidersApplyButtonRegistration(stage, this._view.detectEdgeCanny);
+    }
+
+    registerImageSmoothingHandlers(stage) {
+        this._slidersApplyButtonRegistration(stage, this._view.smoothenImage);
+    }
+
+    registerAdaptiveThresholdHandlers(stage) {
+        this._slidersApplyButtonRegistration(stage, this._view.adaptThreshold);
+    }
+
+    _slidersApplyButtonRegistration(stage, callback) {
         const container = stage.getDomComponents()
-            .controls[this._chosenMethodContext.name].elements;
+        .controls[this._chosenMethodContext.name].elements;
         const button = container.querySelector('button');
         const inputs = container.querySelectorAll('.slider-value');
         const sliders = container.querySelectorAll('.slider');
@@ -194,65 +129,19 @@ class ImageService {
         }
         
         button.addEventListener('click', (event) => {
-            for (const [key, input] of Object.entries(inputs)) {
-                if (+input.value > limitValues[key].max) {
-                    input.value = limitValues[key].max
-                } else if (+input.value < limitValues[key].min) {
-                    input.value = limitValues[key].min
-                }
-            }
-            
-            this._view.detectEdgeCanny(+inputs[0].value, +inputs[1].value);
-        });
-    }
+            let values = [];
 
-    registerImageSmoothingHandlers(stage, router) {
-        const container = stage.getDomComponents()
-            .controls[this._chosenMethodContext.name].elements;
-        const button = container.querySelector('button');
-        const inputs = container.querySelectorAll('.slider-value');
-        const sliders = container.querySelectorAll('.slider');
-        const limitValues = [];
-        
-        for (const slider of sliders) {
-            limitValues.push({min: slider.min, max: slider.max});
-        }
-        
-        button.addEventListener('click', (event) => {
             for (const [key, input] of Object.entries(inputs)) {
                 if (+input.value > limitValues[key].max) {
                     input.value = limitValues[key].max
                 } else if (+input.value < limitValues[key].min) {
                     input.value = limitValues[key].min
                 }
-            }
-            
-            this._view.smoothenImage(+inputs[0].value);
-        });
-    }
 
-    registerAdaptiveThresholdHandlers(stage, router) {
-        const container = stage.getDomComponents()
-            .controls[this._chosenMethodContext.name].elements;
-        const button = container.querySelector('button');
-        const inputs = container.querySelectorAll('.slider-value');
-        const sliders = container.querySelectorAll('.slider');
-        const limitValues = [];
-        
-        for (const slider of sliders) {
-            limitValues.push({min: slider.min, max: slider.max});
-        }
-        
-        button.addEventListener('click', (event) => {
-            for (const [key, input] of Object.entries(inputs)) {
-                if (+input.value > limitValues[key].max) {
-                    input.value = limitValues[key].max
-                } else if (+input.value < limitValues[key].min) {
-                    input.value = limitValues[key].min
-                }
+                values.push(+input.value);
             }
             
-            this._view.adaptThreshold(+inputs[0].value, +inputs[1].value);
+            callback.apply(this._view, values);
         });
     }
 
