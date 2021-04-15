@@ -135,7 +135,7 @@ header .logo h1 {
 }
 
 .control-panel > .control-panel-body {
-  padding: 30px 10px;
+  padding: 1em .5em 5em .5em;
   display: flex;
   justify-content: center;
   border-radius: 5px;
