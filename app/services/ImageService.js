@@ -64,34 +64,34 @@ class ImageService {
      * @param {Stage} stage instance
      * @param {Router} router instance
      */
-    registerAdjustBrightnessHandlers(stage) {
-        this._slidersApplyButtonRegistration(stage, this._view.alterBrightness);
+    registerAdjustBrightnessHandlers(stage, router) {
+        this._slidersApplyButtonRegistration(stage, router,this._view.alterBrightness);
     }
 
     /**
      * @param {Stage} stage instance
      * @param {Router} router instance
      */
-    registerAdjustContrastHandlers(stage) {
-        this._slidersApplyButtonRegistration(stage, this._view.alterContrast);
+    registerAdjustContrastHandlers(stage, router) {
+        this._slidersApplyButtonRegistration(stage, router,this._view.alterContrast);
     }
 
     /**
      * @param {Stage} stage instance
      * @param {Router} router instance
      */
-    registerSharpenImageHandlers(stage) {
-        this._slidersApplyButtonRegistration(stage, this._view.sharpenImage);
+    registerSharpenImageHandlers(stage, router) {
+        this._slidersApplyButtonRegistration(stage, router,this._view.sharpenImage);
     }
 
     /**
      * @param {Stage} stage instance
      */
-    registerGammaCorrectionHandlers(stage) {
-        this._slidersApplyButtonRegistration(stage, this._view.correctGamma);
+    registerGammaCorrectionHandlers(stage, router) {
+        this._slidersApplyButtonRegistration(stage, router,this._view.correctGamma);
     }
 
-    registerImageNegativesHandlers(stage) {
+    registerImageNegativesHandlers(stage, router) {
         const applyButton = stage.getDomComponents()
             .controls[this._chosenMethodContext.name].elements.querySelector('button');
 
@@ -100,23 +100,23 @@ class ImageService {
         });
     }
 
-    registerLogTransformHandlers(stage) {
-        this._slidersApplyButtonRegistration(stage, this._view.logTransform);
+    registerLogTransformHandlers(stage, router) {
+        this._slidersApplyButtonRegistration(stage, router, this._view.logTransform);
     }
 
-    registerCannyEdgeDetectionHandlers(stage) { 
-        this._slidersApplyButtonRegistration(stage, this._view.detectEdgeCanny);
+    registerCannyEdgeDetectionHandlers(stage, router) { 
+        this._slidersApplyButtonRegistration(stage, router, this._view.detectEdgeCanny);
     }
 
-    registerImageSmoothingHandlers(stage) {
-        this._slidersApplyButtonRegistration(stage, this._view.smoothenImage);
+    registerImageSmoothingHandlers(stage, router) {
+        this._slidersApplyButtonRegistration(stage, router, this._view.smoothenImage);
     }
 
-    registerAdaptiveThresholdHandlers(stage) {
-        this._slidersApplyButtonRegistration(stage, this._view.adaptThreshold);
+    registerAdaptiveThresholdHandlers(stage, router) {
+        this._slidersApplyButtonRegistration(stage, router, this._view.adaptThreshold);
     }
 
-    _slidersApplyButtonRegistration(stage, callback) {
+    _slidersApplyButtonRegistration(stage, router, callback) {
         const container = stage.getDomComponents()
         .controls[this._chosenMethodContext.name].elements;
         const button = container.querySelector('button');
