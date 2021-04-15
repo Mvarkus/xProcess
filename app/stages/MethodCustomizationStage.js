@@ -106,13 +106,25 @@ class MethodCustomizationStage extends Stage {
                         startValue: 1
                     }, {
                         min: 1,
-                        labelText: "max thresh:",
+                        labelText: "max thresh: ",
                         step: 1,
                         max: 255,
                         startValue: 1
-                }]),
+                    }]),
                     tooltip: document.createElement('p')
                         .textContent = `Select the tranformation level by moving the slider
+                             or entering it into the input box.`
+                },
+                imageSmoothing: {
+                    elements: this._buildSliders('Image smoothing', [{
+                        min: 1,
+                        labelText: "smoothing level: ",
+                        step: 2,
+                        max: 25,
+                        startValue: 1
+                    },]),
+                    tooltip: document.createElement('p')
+                        .textContent = `Select the smoothening level by moving the slider
                              or entering it into the input box.`
                 }
             }
@@ -136,7 +148,7 @@ class MethodCustomizationStage extends Stage {
             let sliderRangeWrapper = document.createElement('div');
             let sliderValueWrapper = document.createElement('div');
 
-            let {min, max, startValue, step, labelText} = settings[i];
+            let { min, max, startValue, step, labelText } = settings[i];
 
             // Slider
             slider.min = min;
@@ -163,6 +175,8 @@ class MethodCustomizationStage extends Stage {
             // Slider value
             sliderValue.type = 'number';
             sliderValue.step = step;
+            sliderValue.min = min;
+            sliderValue.max = max;
             sliderValue.value = startValue;
             sliderValue.classList.add('slider-value');
             sliderValue.id = 'slider-value-id'

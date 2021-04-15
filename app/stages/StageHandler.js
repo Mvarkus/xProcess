@@ -65,6 +65,13 @@ class StageHandler {
                 'ImageController',
                 'cannyEdgeDetectionBootstrap'
             ]
+        }, {
+            text: 'Image smoothing',
+            name: 'imageSmoothing',
+            registrator: [
+                'ImageController',
+                'imageSmoothingBootstrap'
+            ]
         }];
 
         return new this([
