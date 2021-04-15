@@ -70,5 +70,9 @@ class ImageController {
     imageSmoothingBootstrap(stage, router) {
         this._service.registerImageSmoothingHandlers(stage, router);
     }
+
+    adaptiveThresholdBootstrap(stage, router) {
+        this._service.registerAdaptiveThresholdHandlers(stage, router);
+    }
     
 }

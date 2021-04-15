@@ -231,6 +231,31 @@ class ImageService {
         });
     }
 
+    registerAdaptiveThresholdHandlers(stage, router) {
+        const container = stage.getDomComponents()
+            .controls[this._chosenMethodContext.name].elements;
+        const button = container.querySelector('button');
+        const inputs = container.querySelectorAll('.slider-value');
+        const sliders = container.querySelectorAll('.slider');
+        const limitValues = [];
+        
+        for (const slider of sliders) {
+            limitValues.push({min: slider.min, max: slider.max});
+        }
+        
+        button.addEventListener('click', (event) => {
+            for (const [key, input] of Object.entries(inputs)) {
+                if (+input.value > limitValues[key].max) {
+                    input.value = limitValues[key].max
+                } else if (+input.value < limitValues[key].min) {
+                    input.value = limitValues[key].min
+                }
+            }
+            
+            this._view.adaptThreshold(+inputs[0].value, +inputs[1].value);
+        });
+    }
+
     /**
      * @param {File} imageFile instance
      */

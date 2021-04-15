@@ -252,7 +252,7 @@ class ImageView {
             const src = cv.imread(this._imageBoxParts.canvas);
             const dst = new cv.Mat();
             cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
-            cv.Canny(src, dst, min, max, 3, true);
+            cv.Canny(src, dst, min, max, 3, false);
             cv.imshow(this._imageBoxParts.canvas, dst);
             src.delete(); dst.delete();
         }
@@ -272,6 +272,24 @@ class ImageView {
             const ksize = new cv.Size(grid, grid);
 
             cv.GaussianBlur(src, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
+            cv.imshow(this._imageBoxParts.canvas, dst);
+            src.delete(); dst.delete();
+        }
+    }
+
+    adaptThreshold(grid, c) {
+        if (this._redraw) {
+            this.drawImage().then(() => {
+                this._redraw = false;
+                this.adaptThreshold(grid, c);
+            });
+        } else {
+            this._redraw = true;
+           
+            const src = cv.imread(this._imageBoxParts.canvas);
+            const dst = new cv.Mat();
+            cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
+            cv.adaptiveThreshold(src, dst, 250, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, grid, c);
             cv.imshow(this._imageBoxParts.canvas, dst);
             src.delete(); dst.delete();
         }

@@ -72,6 +72,13 @@ class StageHandler {
                 'ImageController',
                 'imageSmoothingBootstrap'
             ]
+        }, {
+            text: 'Adaptive threshold',
+            name: 'adaptiveThreshold',
+            registrator: [
+                'ImageController',
+                'adaptiveThresholdBootstrap'
+            ]
         }];
 
         return new this([

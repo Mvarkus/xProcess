@@ -126,6 +126,24 @@ class MethodCustomizationStage extends Stage {
                     tooltip: document.createElement('p')
                         .textContent = `Select the smoothening level by moving the slider
                              or entering it into the input box.`
+                },
+                adaptiveThreshold: {
+                    elements: this._buildSliders('Adaptive threshold', [{
+                        min: 1,
+                        labelText: "block size: ",
+                        step: 2,
+                        max: 25,
+                        startValue: 1
+                    }, {
+                        min: 0,
+                        labelText: "constant: ",
+                        step: 1,
+                        max: 30,
+                        startValue: 1
+                    }]),
+                    tooltip: document.createElement('p')
+                        .textContent = `Select the smoothening level by moving the slider
+                             or entering it into the input box.`
                 }
             }
         };
