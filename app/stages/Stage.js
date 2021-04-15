@@ -42,6 +42,7 @@ class Stage {
      */
     terminate(router) {
         this._state = null;
+        this._done = false;
         this._components = null;
         for (const [controller, action] of this.getActions('terminate')) {
             router.getController(controller)[action](
