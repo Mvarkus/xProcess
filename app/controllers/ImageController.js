@@ -34,7 +34,6 @@ class ImageController {
         this._service.redrawImage();
     }
     
-
     retrieveChosenMethodContext() {
         return this._service.getChosenMethodContext();
     }
