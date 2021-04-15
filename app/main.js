@@ -30,6 +30,7 @@ Promise.all([
     loadScript('app/stages/FileUploadStage.js'),
     loadScript('app/stages/MethodSelectionStage.js'),
     loadScript('app/stages/MethodCustomizationStage.js'),
+    loadScript('app/stages/FinishStage.js'),
     loadScript('app/components/Router.js'),
     loadScript('app/components/NotificationManager.js'),
     loadScript('app/controllers/PanelController.js'),
