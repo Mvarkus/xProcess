@@ -190,6 +190,12 @@ header .logo h1 {
   border: .15em solid #404040;
 }
 
+.centered-button {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
 .panel-button:hover {
   background-color: #404040;
   color: #bcbcbc;
