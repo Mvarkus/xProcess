@@ -70,13 +70,14 @@ class MethodCustomizationStage extends Stage {
                         const methodTitle = document.createElement('span');
                         const wrapper = document.createElement('div');
 
-                        applyButton.classList.add('panel-button');
+                        applyButton.classList.add('panel-button', 'centered-button');
                         applyButton.textContent = 'apply';
 
                         // Method title
                         methodTitle.textContent = 'Image negatives';
                         methodTitle.classList.add('method-title');
 
+                        wrapper.classList.add('slider-container');
                         wrapper.append(methodTitle, applyButton);
 
                         return wrapper;
