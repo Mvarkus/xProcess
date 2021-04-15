@@ -101,7 +101,16 @@ class StageHandler {
                 terminate: [
                     ['ImageController', 'terminateCustomizationStage']
                 ]
-            }, supportedMethods)
+            }, supportedMethods),
+            new FinishStage({
+                bootstrap: [
+                    ['PanelController', 'switchToFinishStage'],
+                    ['ImageController', 'switchToFinishStage']
+                ],
+                terminate: [
+                    ['PanelController', 'terminateFinishStage']
+                ]
+            }),
         ]);
     }
 

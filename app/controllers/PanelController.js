@@ -53,16 +53,43 @@ class PanelController {
     }
 
     /**
+     * @param {Stage} stage  
+     * @param {Router} router  
+     */
+    switchToFinishStage(stage, router) {
+        this._service.renderUpdate(
+            'body', stage.getDomComponents().button
+        );
+
+        this._service.renderUpdate(
+            'tooltip', stage.getDomComponents().tooltip
+        );
+
+        this._service.changeButtonContent('back', 'back to methods');
+        this._service.changeButtonState('back', {
+            skip: 1
+        });
+    }
+
+    terminateFinishStage(stage, router) {
+        this._service.resetButtonContent('back');
+    }
+
+    /**
      * @param {string} buttonName 
      * @param {object} state 
      */
     changeButtonState(buttonName, state) {
         this._service.changeButtonState(buttonName, state);
     }
+    
+
+    changeButtonContent(buttonName, content) {
+        this._service.changeButtonState(buttonName, content)
+    }
 
     /**
-     * @param {string} buttonName 
-     * @returns {object} state
+     * @param {string} buttonName
      */
     retrieveButtonState(buttonName) {
         return this._service.retrieveButtonState(buttonName);

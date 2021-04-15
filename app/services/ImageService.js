@@ -11,7 +11,7 @@ class ImageService {
      * @param {object} domComponents collection of DOM elements
      */
      registerFileUploadEventHandlers(stage, router) {
-        stage.getDomComponents().button.control.onchange = (event) => {
+        stage.getDomComponents().button.control.addEventListener('change', (event) => {
             if (!this._isImage(event.target.files[0])) {
                 NotificationManager.errorOccured(
                     new Error("Uploaded file must be an image")
@@ -20,17 +20,17 @@ class ImageService {
                 return false;
             }
 
-            this._view.imageFile = event.target.files[0];
+            this._view.imageBlob = event.target.files[0];
             this.setupImageBox();
 
-            stage.state = {imageFile: event.target.files[0]};
+            stage.state = {imageBlob: event.target.files[0]};
             stage.done = true;
 
             router.getController('PanelController').changeButtonState(
                 'next',
                 {active: true}
             );
-        };
+        });
     }
 
     /**
@@ -58,6 +58,14 @@ class ImageService {
                 'next', {active: true}
             );
         }); 
+    }
+
+    /**
+     * @param {Stage} stage instance
+     * @param {Router} router instance
+     */
+    registerDownloadHandlers(stage, router) {
+
     }
 
     /**
@@ -92,11 +100,15 @@ class ImageService {
     }
 
     registerImageNegativesHandlers(stage, router) {
+        const panelController = router.getController('PanelController');
+        
         const applyButton = stage.getDomComponents()
             .controls[this._chosenMethodContext.name].elements.querySelector('button');
 
         applyButton.addEventListener('click', () => {
             this._view.imageNegatives();
+            panelController.changeButtonState('next', {active: true});
+            stage.done = true;
         });
     }
 
@@ -117,12 +129,16 @@ class ImageService {
     }
 
     _slidersApplyButtonRegistration(stage, router, callback) {
+        const panelController = router.getController('PanelController');
+
         const container = stage.getDomComponents()
         .controls[this._chosenMethodContext.name].elements;
         const button = container.querySelector('button');
         const inputs = container.querySelectorAll('.slider-value');
         const sliders = container.querySelectorAll('.slider');
         const limitValues = [];
+
+        
         
         for (const slider of sliders) {
             limitValues.push({min: slider.min, max: slider.max});
@@ -142,6 +158,8 @@ class ImageService {
             }
             
             callback.apply(this._view, values);
+            panelController.changeButtonState('next', {active: true});
+            stage.done = true;
         });
     }
 
@@ -171,5 +189,9 @@ class ImageService {
     setupImageBox() {
         this._view.drawImage();
         this._view.updateMetaData();
+    }
+
+    saveImage() {
+        this._view.saveImage();
     }
 }

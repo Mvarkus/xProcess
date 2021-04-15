@@ -30,6 +30,17 @@ class ImageController {
      * @param {Stage} stage instance 
      * @param {Router} router instance
      */
+    switchToFinishStage(stage, router) {
+        this._service.saveImage();
+        this._service.registerDownloadHandlers(
+            stage, router
+        );
+    }
+
+    /**
+     * @param {Stage} stage instance 
+     * @param {Router} router instance
+     */
     terminateCustomizationStage(stage, router) {
         this._service.redrawImage();
     }
