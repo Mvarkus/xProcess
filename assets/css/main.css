@@ -193,7 +193,8 @@ header .logo h1 {
 .centered-button {
   position: absolute;
   top: 50%;
-  transform: translate(0, -50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .panel-button:hover {
@@ -235,6 +236,7 @@ header .logo h1 {
   display: flex;
   flex-flow: column nowrap;
   padding: .5em;
+  width: 90%;
 }
 
 .slider-container .panel-button {
