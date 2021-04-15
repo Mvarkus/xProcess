@@ -66,6 +66,7 @@ class PanelController {
         );
 
         this._service.changeButtonContent('back', 'back to methods');
+        this._service.changeButtonContent('next', '');
         this._service.changeButtonState('back', {
             skip: 1
         });
@@ -73,6 +74,7 @@ class PanelController {
 
     terminateFinishStage(stage, router) {
         this._service.resetButtonContent('back');
+        this._service.resetButtonContent('next');
     }
 
     /**

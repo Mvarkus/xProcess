@@ -5,6 +5,7 @@ class ImageView {
     constructor(imageBoxParts) {
         this._imageBoxParts = imageBoxParts;
         this._imageBlob = null
+        this._imageName = null;
         this._redraw = false;
     }
 
@@ -296,6 +297,10 @@ class ImageView {
     }
 
     set imageBlob(blob) { this._imageBlob = blob };
+    get imageBlob() { return this._imageBlob };
+
+    set imageName(name) { this._imageName = name };
+    get imageName() { return this._imageName };
 
     /**
      * @param {File} imageFile instance
@@ -325,7 +330,7 @@ class ImageView {
     updateMetaData() {
         const filename = document.createElement('span');
         this._imageBoxParts.meta.innerHTML = '';
-        filename.textContent = this._imageBlob.name;
+        filename.textContent = this._imageName;
 
         this._imageBoxParts.meta.append(filename);
     }
@@ -334,5 +339,9 @@ class ImageView {
         this._imageBoxParts.canvas.toBlob((blob) => {
             this._imageBlob = blob;
         }, this._imageBlob.type);
+    }
+
+    generateImageURL() {
+        return URL.createObjectURL(this._imageBlob);
     }
 }

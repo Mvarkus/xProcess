@@ -21,6 +21,8 @@ class ImageService {
             }
 
             this._view.imageBlob = event.target.files[0];
+            this._view.imageName = event.target.files[0].name;
+            
             this.setupImageBox();
 
             stage.state = {imageBlob: event.target.files[0]};
@@ -58,14 +60,6 @@ class ImageService {
                 'next', {active: true}
             );
         }); 
-    }
-
-    /**
-     * @param {Stage} stage instance
-     * @param {Router} router instance
-     */
-    registerDownloadHandlers(stage, router) {
-
     }
 
     /**
@@ -125,6 +119,16 @@ class ImageService {
 
     registerAdaptiveThresholdHandlers(stage, router) {
         this._slidersApplyButtonRegistration(stage, router, this._view.adaptThreshold);
+    }
+
+    registerDownloadHandlers(stage, router) {
+        stage.getDomComponents().button.addEventListener('click', async () => {
+            const url = this._view.generateImageURL();
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = this._view.imageName;
+            link.click();
+        });
     }
 
     _slidersApplyButtonRegistration(stage, router, callback) {
