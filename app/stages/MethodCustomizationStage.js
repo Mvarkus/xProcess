@@ -129,7 +129,7 @@ class MethodCustomizationStage extends Stage {
                 },
                 adaptiveThreshold: {
                     elements: this._buildSliders('Adaptive threshold', [{
-                        min: 1,
+                        min: 3,
                         labelText: "block size: ",
                         step: 2,
                         max: 25,
