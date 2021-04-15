@@ -258,6 +258,25 @@ class ImageView {
         }
     }
 
+    smoothenImage(grid) {
+        if (this._redraw) {
+            this.drawImage().then(() => {
+                this._redraw = false;
+                this.smoothenImage(grid);
+            });
+        } else {
+            this._redraw = true;
+           
+            const src = cv.imread(this._imageBoxParts.canvas);
+            const dst = new cv.Mat();
+            const ksize = new cv.Size(grid, grid);
+
+            cv.GaussianBlur(src, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
+            cv.imshow(this._imageBoxParts.canvas, dst);
+            src.delete(); dst.delete();
+        }
+    }
+
     set imageFile(file) { this._imageFile = file };
 
     /**

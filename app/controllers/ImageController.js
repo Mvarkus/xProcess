@@ -65,7 +65,10 @@ class ImageController {
 
     cannyEdgeDetectionBootstrap(stage, router) {
         this._service.registerCannyEdgeDetectionHandlers(stage, router);
-    }
+    }imageSmoothing
 
+    imageSmoothingBootstrap(stage, router) {
+        this._service.registerImageSmoothingHandlers(stage, router);
+    }
     
 }
