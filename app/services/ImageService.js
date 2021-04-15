@@ -101,7 +101,6 @@ class ImageService {
 
     registerImageNegativesHandlers(stage, router) {
         const panelController = router.getController('PanelController');
-        
         const applyButton = stage.getDomComponents()
             .controls[this._chosenMethodContext.name].elements.querySelector('button');
 
@@ -182,7 +181,6 @@ class ImageService {
     }
 
     redrawImage() {
-        console.log();
         this._view.drawImage();
     }
 
