@@ -23,6 +23,7 @@
         const input = document.createElement('input');
         input.type = 'file';
         input.name = 'image';
+        input.accept = 'image/*'
         input.classList = 'upload-input';
         button.append(input);
 
