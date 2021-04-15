@@ -4,13 +4,19 @@ class PanelView {
      */
     constructor(panelDomParts) {
         this._panelDomParts = panelDomParts;
+        this._defaultButtonContent = {
+            back: panelDomParts.buttons['back'].textContent,
+            next: panelDomParts.buttons['next'].textContent
+        };
 
         this._controlButtons = {
             back: {
-                active: false
+                active: false,
+                skip: 0
             },
             next: {
-                active: false   
+                active: false,
+                skip: 0
             }
         };
     }
@@ -20,7 +26,10 @@ class PanelView {
      * @param {object} state 
      */
     setButtonState(buttonName, state) {
-        this._controlButtons[buttonName] = state;
+        this._controlButtons[buttonName] = {
+            active: state.active ?? this._controlButtons[buttonName].active,
+            skip: state.skip ?? this._controlButtons[buttonName].skip,
+        };
         this._panelDomParts.buttons[buttonName].classList = 
             state.active ? 'activate' : '';
     }
@@ -46,5 +55,16 @@ class PanelView {
      */
     fillPanelPart(partName, content) {
         this._panelDomParts[partName].append(content)
+    }
+
+    changeButtonContent(buttonName, content) {
+        this._panelDomParts.buttons[buttonName].textContent = '';
+        this._panelDomParts.buttons[buttonName].textContent = content;
+    }
+
+    changeButtonContentToDefault(buttonName) {
+        this._panelDomParts.buttons[buttonName].textContent = '';
+        this._panelDomParts.buttons[buttonName].textContent =
+            this._defaultButtonContent[buttonName];
     }
 }

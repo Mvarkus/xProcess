@@ -30,4 +30,12 @@ class PanelService {
     retrieveButtonState(buttonName) {
         return this._view.getButtonState(buttonName);
     }
+
+    changeButtonContent(buttonName, content) {
+        this._view.changeButtonContent(buttonName, content);
+    }
+
+    resetButtonContent(buttonName) {
+        this._view.changeButtonContentToDefault(buttonName);
+    }
 }
