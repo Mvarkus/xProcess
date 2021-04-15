@@ -62,6 +62,17 @@
         const buttonState = panelController.retrieveButtonState('back');
 
         if (buttonState.active && this._stageHandler.previousStageExists()) {
+
+            if (buttonState.skip > 0) {
+                buttonState.skip--;
+
+                this._terminateStage();
+                this._stageHandler.switchToPreviousStage();
+                this.goBack();
+                breadcrumbController.movePointerBack();
+                return;
+            }
+
             this._terminateStage();
             this._stageHandler.switchToPreviousStage();
             this._bootstrapStage();
