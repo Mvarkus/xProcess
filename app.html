@@ -896,7 +896,7 @@
          */
         _build() {
             const tooltip = document.createElement('p');
-            tooltip.textContent = 'Choose an image which needs to be altered.';
+            tooltip.textContent = 'Download or go back and apply another method.';
 
             const downloadButton = document.createElement('button');
             downloadButton.classList.add('centered-button', 'panel-button');
@@ -994,8 +994,7 @@
                             return wrapper;
                         })(),
                         tooltip: document.createElement('p')
-                            .textContent = `Select the gamma correction level by moving the slider
-                            or entering it into the input box.`
+                            .textContent = `Press the button to apply image inversion method.`
                     },
                     logTransform: {
                         elements: this._buildSliders('Log transform', [{
@@ -1024,8 +1023,7 @@
                             startValue: 1
                         }]),
                         tooltip: document.createElement('p')
-                            .textContent = `Select the tranformation level by moving the slider
-                             or entering it into the input box.`
+                            .textContent = `Adjust min and max thresholds to find best fit of the line detection.`
                     },
                     imageSmoothing: {
                         elements: this._buildSliders('Image smoothing', [{
@@ -1054,8 +1052,8 @@
                             startValue: 1
                         }]),
                         tooltip: document.createElement('p')
-                            .textContent = `Select the smoothening level by moving the slider
-                             or entering it into the input box.`
+                            .textContent = `Block size is used to calculate a threshold value by using pixel neighborhood.
+                                The constant is subtracted from the mean or weighted mean, it will help to reduce noise`
                     }
                 }
             };
@@ -1156,7 +1154,6 @@
 
             return sliderContainer;
         }
-
 
     }
 
@@ -1851,22 +1848,22 @@
                 if (amount < 1) { return }
                 const src = cv.imread(this._imageBoxParts.canvas);
                 const laplasianResult = new cv.Mat(),
-                    subsctrationResult = new cv.Mat(),
+                    subtractionResult = new cv.Mat(),
                     mask = new cv.Mat();
 
                 // cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
                 cv.Laplacian(src, laplasianResult, cv.CV_8U, 1, 1, 0, cv.BORDER_DEFAULT);
 
-                cv.subtract(src, laplasianResult, subsctrationResult, mask, -1);
+                cv.subtract(src, laplasianResult, subtractionResult, mask, -1);
 
                 for (let i = 1; i <= amount; i++) {
-                    cv.subtract(subsctrationResult, laplasianResult, subsctrationResult, mask, -1);
+                    cv.subtract(subtractionResult, laplasianResult, subtractionResult, mask, -1);
                 }
 
-                cv.imshow(this._imageBoxParts.canvas, subsctrationResult);
+                cv.imshow(this._imageBoxParts.canvas, subtractionResult);
                 src.delete();
                 laplasianResult.delete();
-                subsctrationResult.delete();
+                subtractionResult.delete();
                 mask.delete();
             }
         }
