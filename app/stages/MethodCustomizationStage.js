@@ -131,7 +131,7 @@ class MethodCustomizationStage extends Stage {
                         min: 3,
                         labelText: "block size: ",
                         step: 2,
-                        max: 25,
+                        max: 35,
                         startValue: 1
                     }, {
                         min: 0,
