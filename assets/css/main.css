@@ -124,7 +124,7 @@ header .logo h1 {
   flex: 3;
   position: relative;
   border: .15em solid #e4e4e4;
-  height: 38em;
+  height: 36em;
 }
 
 .control-panel > .control-panel-title {
@@ -154,7 +154,7 @@ header .logo h1 {
 .help > .help-button {
   font-size: 1em;
   padding: .15em .55em;
-  border: 2px solid #393939;
+  border: 3px solid #393939;
   border-radius: 50%;
   right: -1.2em;
   z-index: 23;
@@ -272,7 +272,7 @@ header .logo h1 {
 }
 
 .slider-container .panel-button {
-  margin: 1em auto;
+  margin: 3em auto 0 auto;
 }
 
 .slider-container .range-wrapper {
@@ -283,6 +283,7 @@ header .logo h1 {
 .slider-container .slider-value-wrapper {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: center;
 }
 
 .slider-value-wrapper label {
@@ -293,18 +294,15 @@ header .logo h1 {
 
 .slider-value {
   width: 4em;
-  margin: .4em auto;
+  margin: .5em;
   text-align: center;
-  padding: .2em .2em .1em .2em;
 }
 
 .slider-settings {
   display: flex;
   flex-flow: column nowrap;
-  margin: .8em;
-  padding: 1.6em 0 1.4em 0;
-  border-top: 2px solid #e4e4e4;
-  border-bottom: 2px solid #e4e4e4;
+  margin: 3em 0 0 0;
+  padding: 0 2em;
 }
 
 .slider-container .slider-apply-wrapper {
