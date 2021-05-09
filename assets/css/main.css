@@ -123,8 +123,8 @@ header .logo h1 {
 .control-panel {
   flex: 3;
   position: relative;
-  border: .15em solid #E4E4E4;
-  height: 40em;
+  border: .15em solid #e4e4e4;
+  height: 38em;
 }
 
 .control-panel > .control-panel-title {
