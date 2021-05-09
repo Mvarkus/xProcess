@@ -1851,7 +1851,7 @@
                     subtractionResult = new cv.Mat(),
                     mask = new cv.Mat();
 
-                // cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
+                cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
                 cv.Laplacian(src, laplasianResult, cv.CV_8U, 1, 1, 0, cv.BORDER_DEFAULT);
 
                 cv.subtract(src, laplasianResult, subtractionResult, mask, -1);
