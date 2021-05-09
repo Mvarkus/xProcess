@@ -21,7 +21,6 @@
         body {
             font-size: 14px;
             font-family: 'Quicksand';
-            font-weight: 500;
         }
 
         input[type="file"] {
@@ -51,7 +50,7 @@
         }
 
         header .logo .line {
-            background-color: #303030;
+            background-color: #393939;
             width: 96%;
             left: 2%;
             z-index: -1;
@@ -67,7 +66,7 @@
 
             color: #f5f5f5;
             border: 20px solid #FFFFFF;
-            background-color: #303030;
+            background-color: #393939;
 
             font-weight: 100;
             font-size: 1.5em;
@@ -97,7 +96,7 @@
         }
 
         .breadcrumbs>.active-breadcrumb {
-            color: #404040;
+            color: #393939;
         }
 
         .breadcrumbs>.breadcrumb>.line {
@@ -109,7 +108,7 @@
         }
 
         .breadcrumbs>.active-breadcrumb>.line {
-            background: #404040;
+            background: #393939;
         }
 
         .current {
@@ -129,16 +128,21 @@
         .control-panel {
             flex: 3;
             position: relative;
-            border: .15em solid #E4E4E4;
-            height: 40em;
+            border: .15em solid #e4e4e4;
+            height: 36em;
         }
 
         .control-panel>.control-panel-title {
             display: block;
             padding: 1em;
             text-align: center;
-            border-bottom: 2px solid #E4E4E4;
+            background: #393939;
+            color: #eaeaea;
             font-size: 1.1em;
+            position: relative;
+            width: 104%;
+            left: -2%;
+            top: -2%;
         }
 
         .control-panel>.control-panel-body {
@@ -155,18 +159,19 @@
         .help>.help-button {
             font-size: 1em;
             padding: .15em .55em;
-            border: 2px solid #404040;
+            border: 3px solid #393939;
             border-radius: 50%;
-            right: -1em;
+            right: -1.2em;
+            z-index: 23;
             position: absolute;
-            background: #404040;
-            color: #e4e4e4;
-            top: -1em;
+            background: #ffffff;
+            color: #393939;
+            top: -1.5em;
+            font-weight: 600;
         }
 
         .help>.help-button:hover {
-            background-color: #404040;
-            color: #f5f5f5;
+            background-color: #e2e2e2;
         }
 
         .help>.help-button:hover~.help-tooltip {
@@ -183,7 +188,7 @@
             z-index: 1;
             padding: 25px;
             background: white;
-            border: 2px solid #404040;
+            border: 2px solid #393939;
             border-radius: 5px;
         }
 
@@ -194,7 +199,7 @@
             padding: .7em 0;
             border-radius: 2px;
             cursor: pointer;
-            border: .15em solid #404040;
+            border: .15em solid #393939;
         }
 
         .centered-button {
@@ -205,8 +210,8 @@
         }
 
         .panel-button:hover {
-            background-color: #404040;
-            color: #bcbcbc;
+            background-color: #393939;
+            color: #e4e4e4;
         }
 
         .methods-list {
@@ -216,7 +221,7 @@
             padding: 0 2em;
             text-align: left;
             overflow: overlay;
-            margin-top: 2em;
+            margin-top: 1em;
         }
 
         .methods-list::-webkit-scrollbar {
@@ -231,13 +236,13 @@
 
         /* Handle */
         .methods-list::-webkit-scrollbar-thumb {
-            background: #404040;
+            background: #393939;
             border-radius: 2em;
         }
 
         /* Handle on hover */
         .methods-list::-webkit-scrollbar-thumb:hover {
-            background: #404040;
+            background: #393939;
         }
 
         .methods-list>li {
@@ -248,12 +253,12 @@
         }
 
         .methods-list>li:hover {
-            border-left: 2px solid #404040;
+            border-left: 2px solid #393939;
         }
 
         .methods-list>li.active-method {
             font-weight: 600;
-            border-left: 2px solid #404040;
+            border-left: 2px solid #393939;
         }
 
         .method-title {
@@ -272,7 +277,7 @@
         }
 
         .slider-container .panel-button {
-            margin: 1em auto;
+            margin: 3em auto 0 auto;
         }
 
         .slider-container .range-wrapper {
@@ -283,6 +288,7 @@
         .slider-container .slider-value-wrapper {
             display: flex;
             flex-flow: row nowrap;
+            justify-content: center;
         }
 
         .slider-value-wrapper label {
@@ -293,18 +299,15 @@
 
         .slider-value {
             width: 4em;
-            margin: .4em auto;
+            margin: .5em;
             text-align: center;
-            padding: .2em .2em .1em .2em;
         }
 
         .slider-settings {
             display: flex;
             flex-flow: column nowrap;
-            margin: .8em;
-            padding: 1.6em 0 1.4em 0;
-            border-top: 2px solid #e4e4e4;
-            border-bottom: 2px solid #e4e4e4;
+            margin: 3em 0 0 0;
+            padding: 0 2em;
         }
 
         .slider-container .slider-apply-wrapper {
@@ -332,8 +335,8 @@
         }
 
         .activate {
-            border-bottom: .15em solid #404040;
-            color: #404040;
+            border-bottom: .15em solid #393939;
+            color: #393939;
             cursor: pointer;
         }
 
@@ -357,7 +360,7 @@
 
         .image {
             display: inline-block;
-            max-width: 500px;
+            max-width: 400px;
         }
 
         .image-meta-data {
@@ -2164,4 +2167,5 @@
 </script>
 
 <script src="https://docs.opencv.org/4.5.2/opencv.js" async onload="main({})"></script>
+
 </html>
