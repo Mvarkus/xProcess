@@ -50,7 +50,7 @@ class MethodCustomizationStage extends Stage {
                     }]),
                     tooltip: document.createElement('p')
                         .textContent = `Select the sharpening level by moving the slider
-                             or entering it into the input box.`
+                            or entering it into the input box.`
                 },
                 gammaCorrection: {
                     elements: this._buildSliders('Gamma correction', [{
@@ -83,8 +83,7 @@ class MethodCustomizationStage extends Stage {
                         return wrapper;
                     })(),
                     tooltip: document.createElement('p')
-                        .textContent = `Select the gamma correction level by moving the slider
-                            or entering it into the input box.`
+                        .textContent = `Press the button to apply image inversion method.`
                 },
                 logTransform: {
                     elements: this._buildSliders('Log transform', [{
@@ -96,7 +95,7 @@ class MethodCustomizationStage extends Stage {
                     }]),
                     tooltip: document.createElement('p')
                         .textContent = `Select the tranformation level by moving the slider
-                             or entering it into the input box.`
+                            or entering it into the input box.`
                 },
                 cannyEdgeDetection: {
                     elements: this._buildSliders('Edge detection (Canny)', [{
@@ -113,8 +112,7 @@ class MethodCustomizationStage extends Stage {
                         startValue: 1
                     }]),
                     tooltip: document.createElement('p')
-                        .textContent = `Select the tranformation level by moving the slider
-                             or entering it into the input box.`
+                        .textContent = `Adjust min and max thresholds to find best fit of the line detection.`
                 },
                 imageSmoothing: {
                     elements: this._buildSliders('Image smoothing', [{
@@ -126,7 +124,7 @@ class MethodCustomizationStage extends Stage {
                     },]),
                     tooltip: document.createElement('p')
                         .textContent = `Select the smoothening level by moving the slider
-                             or entering it into the input box.`
+                            or entering it into the input box.`
                 },
                 adaptiveThreshold: {
                     elements: this._buildSliders('Adaptive threshold', [{
@@ -143,8 +141,8 @@ class MethodCustomizationStage extends Stage {
                         startValue: 1
                     }]),
                     tooltip: document.createElement('p')
-                        .textContent = `Select the smoothening level by moving the slider
-                             or entering it into the input box.`
+                        .textContent = `Block size is used to calculate a threshold value by using pixel neighborhood.
+                            The constant is subtracted from the mean or weighted mean, it will help to reduce noise`
                 }
             }
         };
